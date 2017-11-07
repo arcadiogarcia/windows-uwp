@@ -167,6 +167,7 @@ Before establishing a connection and sending data with a WebSocket, your app nee
 > }
 >```
 >```csharp
+
 >//The Closed event handler
 >private void WebSock_Closed(IWebSocket sender, WebSocketClosedEventArgs args)
 >{
@@ -223,6 +224,7 @@ The following function sends the given string to a connected WebSocket, and prin
 >    DataWriter messageWriter = new DataWriter(webSock.OutputStream);
 >    messageWriter.WriteString(message);
 >    await messageWriter.StoreAsync();
+>    messageWriter.DetachStream();
 >}
 >```
 
