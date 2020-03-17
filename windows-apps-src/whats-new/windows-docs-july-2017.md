@@ -1,21 +1,18 @@
 ---
-author: QuinnRadich
 title: What's New in Windows Docs in July 2017 - Develop UWP apps
 description: New features, samples, and developer guidance has been added to the Windows 10 developer documentation for July 2017
 keywords: what's new, update, features, developer guidance, Windows 10
-ms.author: quradic
 ms.date: 07/05/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
-localizationpriority: medium
----
 
+
+ms.localizationpriority: medium
+---
 # What's New in the Windows Developer Docs in July 2017
 
 The Windows Developer Documentation is constantly being updated with information on new features available to developers across the Windows platform. The following feature overviews, developer guidance, and code samples have recently been made available, containing new and updated information for Windows developers.
 
-[Install the tools and SDK](http://go.microsoft.com/fwlink/?LinkId=821431) on Windows 10 and you’re ready to either [create a new Universal Windows app](../get-started/your-first-app.md) or explore how you can use your [existing app code on Windows](../porting/index.md).
+[Install the tools and SDK](https://developer.microsoft.com/windows/downloads#_blank) on Windows 10 and you’re ready to either [create a new Universal Windows app](../get-started/your-first-app.md) or explore how you can use your [existing app code on Windows](../porting/index.md).
 
 ## Features
 
@@ -105,14 +102,13 @@ The article [Process media frames with MediaFrameReader](../audio-video-camera/p
 
 ### Scoped Search
 
-A "UWP" scope has been added to the [UWP conceptual](../get-started/whats-a-uwp.md) and [API reference](https://docs.microsoft.com/en-us/uwp/api/) documentation on docs.microsoft.com. Unless this scope is deactivated, searches made from within these areas will return UWP docs only.
+A "UWP" scope has been added to the [UWP conceptual](../get-started/universal-application-platform-guide.md) and [API reference](https://docs.microsoft.com/uwp/api/) documentation on docs.microsoft.com. Unless this scope is deactivated, searches made from within these areas will return UWP docs only.
 
 ![Scoped Search](images/scoped-search.png)
 
 ### Test your Windows app for Windows 10 S
 
-Test your Windows app to ensure that it will operate correctly on devices that run Windows S. 
-Use [this new guide](../porting/desktop-to-uwp-test-windows-s.md) to learn how. 
+Test your Windows app to ensure that it will operate correctly on devices that run Windows S. Use [this new guide](https://docs.microsoft.com/windows/msix/desktop/desktop-to-uwp-test-windows-s) to learn how.
 
 ## Samples
 
@@ -132,7 +128,7 @@ Use [this new guide](../porting/desktop-to-uwp-test-windows-s.md) to learn how.
 
 ### Accessibility
 
-Building accessibility into your apps opens them up to a much wider audience. [Watch the video](https://channel9.msdn.com/Blogs/One-Dev-Minute/Developing-Apps-for-Accessibility), then learn more about [developing apps for accessibility](https://developer.microsoft.com/en-us/windows/accessible-apps).
+Building accessibility into your apps opens them up to a much wider audience. [Watch the video](https://channel9.msdn.com/Blogs/One-Dev-Minute/Developing-Apps-for-Accessibility), then learn more about [developing apps for accessibility](https://developer.microsoft.com/windows/accessible-apps).
 
 ### Payments Request API
 
@@ -140,4 +136,4 @@ The Payment Request API helps custoemrs and sellers seamlessly complete the onli
 
 ### Windows 10 IoT Core
 
-With Windows 10 IoT Core and the Universal Windows Platform, you can quickly protoype and build projects with vision and component connections, such as this Pet Recognition Door. [Watch the video](https://channel9.msdn.com/Blogs/One-Dev-Minute/Building-a-Pet-Recognition-Door-Using-Windows-10-IoT-Core), then learn more about how to [get started with Windows 10 IoT Core](https://developer.microsoft.com/en-us/windows/iot).
+With Windows 10 IoT Core and the Universal Windows Platform, you can quickly protoype and build projects with vision and component connections, such as this Pet Recognition Door. [Watch the video](https://channel9.msdn.com/Blogs/One-Dev-Minute/Building-a-Pet-Recognition-Door-Using-Windows-10-IoT-Core), then learn more about how to [get started with Windows 10 IoT Core](https://developer.microsoft.com/windows/iot).

@@ -1,17 +1,12 @@
 ---
-author: joannaleecy
 title: Set up
 description: Learn how to assemble the rendering pipeline to display graphics. Game rendering, set up and prepare data.
 ms.assetid: 7720ac98-9662-4cf3-89c5-7ff81896364a
-ms.author: joanlee
 ms.date: 10/24/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, games, rendering
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
-
 # Rendering framework II: Game rendering
 
 In [Rendering framework I](tutorial--assembling-the-rendering-pipeline.md), we've covered how we take the scene info and present it to the display screen. Now, we'll take a step back and learn how to prepare the data for rendering.
@@ -36,16 +31,16 @@ This article explains how to set up other pieces of this framework and prepare t
 The renderer is responsible for creating and maintaining all the D3D11 and D2D objects used to generate the game visuals. The __GameRenderer__ class is the renderer for this sample game and is designed to meet the game's rendering needs.
 
 These are some concepts you can use to help design the renderer for your game:
-* Because Direct3D 11 APIs are defined as [COM](https://msdn.microsoft.com/library/windows/desktop/ms694363.aspx) APIs, you must provide [ComPtr](https://docs.microsoft.com/cpp/windows/comptr-class) references to the objects defined by these APIs. These objects are automatically freed when their last reference goes out of scope when the app terminates. For more information, see [ComPtr](https://github.com/Microsoft/DirectXTK/wiki/ComPtr). Example of these objects: constant buffers, shader objects - [vertex shader](tutorial--assembling-the-rendering-pipeline.md#vertex-shaders-and-pixel-shaders), [pixel shader](tutorial--assembling-the-rendering-pipeline.md#vertex-shaders-and-pixel-shaders), and shader resource objects.
+* Because Direct3D 11 APIs are defined as [COM](https://docs.microsoft.com/windows/desktop/com/the-component-object-model) APIs, you must provide [ComPtr](https://docs.microsoft.com/cpp/windows/comptr-class) references to the objects defined by these APIs. These objects are automatically freed when their last reference goes out of scope when the app terminates. For more information, see [ComPtr](https://github.com/Microsoft/DirectXTK/wiki/ComPtr). Example of these objects: constant buffers, shader objects - [vertex shader](tutorial--assembling-the-rendering-pipeline.md#vertex-shaders-and-pixel-shaders), [pixel shader](tutorial--assembling-the-rendering-pipeline.md#vertex-shaders-and-pixel-shaders), and shader resource objects.
 * Constant buffers are defined in this class to hold various data needed for rendering.
     * Use multiple constant buffers with different frequencies to reduce the amount of data that must be sent to the GPU per frame. This sample separates constants into different buffers based on the frequency that they must be updated. This is a best practice for Direct3D programming. 
     * In this game sample, 4 constant buffers are defined.
         1. __m\_constantBufferNeverChanges__ contains the lighting parameters. It's set one time in the __FinalizeCreateGameDeviceResources__ method and never changes again.
-        2. __m\_constantBufferChangeOnResize__ contains the projection matrix. The projection matrix is dependent on the size and aspect ratio of the window. It's set in [__CreateWindowSizeDependentResources__](#createwindowsizedependentresources-method) and then updated after resources are loaded in the [__FinalizeCreateGameDeviceResources__](#finalizecreategamedeviceresources-method) method. If rendering in 3D, it is also changed twice per frame.
+        2. __m\_constantBufferChangeOnResize__ contains the projection matrix. The projection matrix is dependent on the size and aspect ratio of the window. It's set in [__CreateWindowSizeDependentResources__](#createwindowsizedependentresource-method) and then updated after resources are loaded in the [__FinalizeCreateGameDeviceResources__](#finalizecreategamedeviceresources-method) method. If rendering in 3D, it is also changed twice per frame.
         3. __m\_constantBufferChangesEveryFrame__ contains the view matrix. This matrix is dependent on the camera position and look direction (the normal to the projection) and changes one time per frame in the __Render__ method. This was discussed earlier in __Rendering framework I: Intro to rendering__, under the [__GameRenderer::Render__ method](tutorial--assembling-the-rendering-pipeline.md#gamerendererrender-method).
         4. __m\_constantBufferChangesEveryPrim__ contains the model matrix and material properties of each primitive. The model matrix transforms vertices from local coordinates into world coordinates. These constants are specific to each primitive and are updated for every draw call. This was discussed earlier in __Rendering framework I: Intro to rendering__, under the [Primitive rendering](tutorial--assembling-the-rendering-pipeline.md#primitive-rendering).
 * Shader resource objects that hold textures for the primitives are also defined in this class.
-    * Some textures are pre-defined ([DDS](https://msdn.microsoft.com/library/windows/desktop/bb943991.aspx) is a file format that can be used to store compressed and uncompressed textures. DDS textures are used for the walls and floor of the world as well as the ammo spheres.)
+    * Some textures are pre-defined ([DDS](https://docs.microsoft.com/windows/desktop/direct3ddds/dx-graphics-dds-pguide) is a file format that can be used to store compressed and uncompressed textures. DDS textures are used for the walls and floor of the world as well as the ammo spheres.)
     * In this game sample, shader resource objects are: __m\_sphereTexture__, __m\_cylinderTexture__, __m\_ceilingTexture__, __m\_floorTexture__, __m\_wallsTexture__.
 * Shader objects are defined in this class to compute our primitives and textures. 
     * In this game sample, the shader objects are __m\_vertexShader__, __m\_vertexShaderFlat__, and __m\_pixelShader__, __m\_pixelShaderFlat__.
@@ -157,7 +152,7 @@ GameRenderer::GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceRes
 In the game sample (and in Visual Studio's __DirectX 11 App (Universal Windows)__ template), creating and loading game resources is implemented using these two methods that are called from __GameRenderer__ constructor:
 
 * [__CreateDeviceDependentResources__](#createdevicedependentresources-method)
-* [__CreateWindowSizeDependentResources__](#createwindowsizedependentresources-method)
+* [__CreateWindowSizeDependentResources__](#createwindowsizedependentresource-method)
 
 ## CreateDeviceDependentResources method
 
@@ -296,7 +291,7 @@ task<void> GameRenderer::CreateGameDeviceResourcesAsync(_In_ Simple3DGame^ game)
     D3D11_SAMPLER_DESC sampDesc;
 
     // ZeroMemory fills a block of memory with zeros. 
-    // For API ref, go to: https://msdn.microsoft.com/en-us/library/windows/desktop/aa366920(v=vs.85).aspx
+    // For API ref, go to: https://msdn.microsoft.com/library/windows/desktop/aa366920(v=vs.85).aspx
     ZeroMemory(&sampDesc, sizeof(sampDesc));
 
     sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
@@ -580,7 +575,7 @@ void GameRenderer::FinalizeCreateGameDeviceResources()
 
 ## CreateWindowSizeDependentResource method
 
-CreateWindowSizeDependentResources methods are called every time the window size, orientation, stereo-enabled rendering, or resolution changes. In the sample game, it updates the the projection matrix in __ConstantBufferChangeOnResize__.
+CreateWindowSizeDependentResources methods are called every time the window size, orientation, stereo-enabled rendering, or resolution changes. In the sample game, it updates the projection matrix in __ConstantBufferChangeOnResize__.
 
 Window size resources are updated in this manner: 
 * The App framework gets one of several possible events indicating a change in the window state. 
@@ -589,7 +584,7 @@ Window size resources are updated in this manner:
 
 For this game sample, a number of method calls are the same as the [__FinalizeCreateGameDeviceResources__](#finalizecreategamedeviceresources-method) method. For code walkthrough, go to the previous section.
 
-The game HUD and overlay window size rendering adjustments is covered under [Add a user interface](#tutorial--adding-a-user-interface).
+The game HUD and overlay window size rendering adjustments is covered under [Add a user interface](tutorial--adding-a-user-interface.md).
 
 ```cpp
 // Initializes view parameters when the window size changes.

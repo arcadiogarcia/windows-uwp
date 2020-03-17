@@ -1,26 +1,22 @@
 ---
-author: Jwmsft
 Description: A color picker lets a user browse through and select colors.
 title: Color Picker
 label: Color Picker
 template: detail.hbs
-ms.author: jimwalk
 ms.date: 05/19/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp
 pm-contact: kisai
 design-contact: ksulliv
 dev-contact: llongley
 doc-status: Published
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
 # Color picker
 
 A color picker is used to browse through and select colors. By default, it lets a user navigate through colors on a color spectrum, or specify a color in either Red-Green-Blue (RGB), Hue-Saturation-Value (HSV), or Hexadecimal textboxes.
 
-> **Important APIs**: [ColorPicker class](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.colorpicker), [Color property](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.colorpicker_color), [ColorChanged event](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.colorpicker_colorchanged)
+> **Important APIs**: [ColorPicker class](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.colorpicker), [Color property](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.colorpicker.Color), [ColorChanged event](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.colorpicker.ColorChanged)
 
 ![A default color picker](images/color-picker-default.png)
 
@@ -29,7 +25,23 @@ A color picker is used to browse through and select colors. By default, it lets 
 
 Use the color picker to let a user select colors in your app. For example, use it to change color settings, such as font colors, background, or app theme colors.
 
-If your app is for drawing or similar tasks using pen, consider using [Inking controls](http://windowsstyleguide/controls-and-patterns/inking-controls/) along with the color picker.
+If your app is for drawing or similar tasks using pen, consider using [Inking controls](inking-controls.md) along with the color picker.
+
+## Examples
+
+<table>
+<th align="left">XAML Controls Gallery<th>
+<tr>
+<td><img src="images/xaml-controls-gallery-sm.png" alt="XAML controls gallery"></img></td>
+<td>
+    <p>If you have the <strong style="font-weight: semi-bold">XAML Controls Gallery</strong> app installed, click here to <a href="xamlcontrolsgallery:/item/ColorPicker">open the app and see the ColorPicker in action</a>.</p>
+    <ul>
+    <li><a href="https://www.microsoft.com/store/productId/9MSVH128X2ZT">Get the XAML Controls Gallery app (Microsoft Store)</a></li>
+    <li><a href="https://github.com/Microsoft/Xaml-Controls-Gallery">Get the source code (GitHub)</a></li>
+    </ul>
+</td>
+</tr>
+</table>
 
 ## Create a color picker
 
@@ -39,7 +51,7 @@ This example shows how to create a default color picker in XAML.
 <ColorPicker x:Name="myColorPicker"/>
 ```
 
-By default, the color picker shows a preview of the chosen color on the rectangular bar beside the color spectrum. You can use either the [ColorChanged](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.colorpicker_colorchanged) event or the [Color](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.colorpicker_color) property to access the selected color and use it in your app. See the following examples for detailed code.
+By default, the color picker shows a preview of the chosen color on the rectangular bar beside the color spectrum. You can use either the [ColorChanged](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.colorpicker.ColorChanged) event or the [Color](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.colorpicker.Color) property to access the selected color and use it in your app. See the following examples for detailed code.
 
 ### Bind to the chosen color
 
@@ -49,7 +61,7 @@ In this example, you bind the Color property of a SolidColorBrush that’s used 
 
 ```xaml
 <ColorPicker x:Name="myColorPicker"
-             ColorSpectrumShape=”Ring”
+             ColorSpectrumShape="Ring"
              IsColorPreviewVisible="False"
              IsColorChannelTextInputVisible="False"
              IsHexInputVisible="False"/>
@@ -130,7 +142,7 @@ When the user does need precise control, like in a graphic design app, you can s
 
 #### Show the circle spectrum
 
-This example shows how to use the [ColorSpectrumShape](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.colorpicker_colorspectrumshape) property to configure the color picker to use a circular spectrum instead of the default square.
+This example shows how to use the [ColorSpectrumShape](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.colorpicker.ColorSpectrumShape) property to configure the color picker to use a circular spectrum instead of the default square.
 
 ```xaml
 <ColorPicker x:Name="myColorPicker"
@@ -189,15 +201,19 @@ Hex values | IsHexInputVisible
   - Provide commit and cancel buttons to apply or cancel the selection. Hitting the back button or tapping outside of the flyout will dismiss it, and not save the user’s selection.
   - Or, commit the selection upon dismissing the flyout, by either tapping outside of the flyout or hitting the back button.
 
+## Get the sample code
+
+- [XAML Controls Gallery sample](https://github.com/Microsoft/Xaml-Controls-Gallery) - See all the XAML controls in an interactive format.
+
 ## Related articles
 
 - [Pen and stylus interactions in UWP apps](../input/pen-and-stylus-interactions.md)
 - [Inking](inking-controls.md)
 
 <!--
-<div class=”microsoft-internal-note”>
+<div class="microsoft-internal-note">
 <p>
 <p>
-Note: For more info, see the [color picker redlines](http://uni/DesignDepot.FrontEnd/#/ProductNav/3666/15/dv/?t=Windows%7CControls&f=RS2) on UNI.
+Note: For more info, see the [color picker redlines](https://uni/DesignDepot.FrontEnd/#/ProductNav/3666/15/dv/?t=Windows%7CControls&f=RS2) on UNI.
 </div>
 -->

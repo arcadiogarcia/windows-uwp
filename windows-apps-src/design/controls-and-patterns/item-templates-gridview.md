@@ -1,24 +1,19 @@
 ---
-author: serenaz
-Description: Item templates for GridView
-title: Item templates for GridView
+Description: Item templates for grid view
+title: Item templates for grid view
 template: detail.hbs
-ms.author: sezhen
 ms.date: 11/03/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, fluent
 ---
-# Item templates for GridView
+# Item templates for grid view
 
-This section contains item templates that you can use with a [**GridView**](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.GridView) control. Use these templates to get the look of common app types.
+This section contains item templates that you can use with a [**GridView**](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.GridView) control. Use these templates to get the look of common app types.
+
+To demonstrate data binding, these templates bind **GridViewItems** to the example Recording class from the [data binding overview](../../data-binding/data-binding-quickstart.md).
 
 > [!NOTE] 
-These templates bind **GridViewItems** to the example Recording class from the [data binding overview](../../data-binding/data-binding-quickstart.md).
-
-> [!NOTE] 
-Currently, when a **DataTemplate** contains multiple controls (e.g. more than a single **TextBlock**), the default accessible name for screenreaders comes from .ToString() on the item. As a convenience you can instead set the [**AutomationProperties.Name**](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.automation.automationproperties) on the root element of the **DataTemplate**. For more on accessibility, see [Accessibililty overview](../accessibility/accessibility-overview.md).
+> Currently, when a **DataTemplate** contains multiple controls (for example, more than a single **TextBlock**), the default accessible name for screenreaders comes from .ToString() on the item. As a convenience you can instead set the [**AutomationProperties.Name**](https://docs.microsoft.com/uwp/api/windows.ui.xaml.automation.automationproperties) on the root element of the **DataTemplate**. For more on accessibility, see [Accessibililty overview](../accessibility/accessibility-overview.md).
 
 ## Icon and text
 Use these templates to display a collection of apps in a grid with an icon and text.
@@ -155,7 +150,8 @@ Use this template to display a media collection with text overlay.
 ```
 
 ## Related articles
-- [GridView class](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.GridView)
+- [GridView class](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.GridView)
 - [Data binding overview](../../data-binding/data-binding-quickstart.md)
 - [Accessibililty overview](../accessibility/accessibility-overview.md)
 - [ListView and GridView sample (Windows 10)](https://github.com/Microsoft/Windows-universal-samples/tree/master/Samples/XamlListView)
+- [Thumbnail images](../../files/thumbnails.md)

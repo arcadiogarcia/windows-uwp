@@ -1,17 +1,12 @@
 ---
-author: mcleblanc
 title: Getting started with Animation
 ms.assetid: C1C3F5EA-B775-4700-9C45-695E78C16205
 description: In this project, we're going to move a rectangle, apply a fade effect, and then bring it back into view.
-ms.author: markl
 ms.date: 02/08/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
-
 # Getting started: Animation
 
 
@@ -123,9 +118,9 @@ If you open the MainPage.xaml file, in **XAML** view, you'll see the XAML code t
 ...
 ```
 
-You can edit this XAML manually, or return to Blend to continue working on it there. Blend makes it fun to create interesting user interfaces, and the ability to animate them using a graphical tool can dramatically speed up development time. For more info about animations, see [Animations overview](https://msdn.microsoft.com/library/windows/apps/mt187350).
+You can edit this XAML manually, or return to Blend to continue working on it there. Blend makes it fun to create interesting user interfaces, and the ability to animate them using a graphical tool can dramatically speed up development time. For more info about animations, see [Animations overview](https://docs.microsoft.com/windows/uwp/graphics/animations-overview).
 
-**Note**  For info about animations for <span class="legacy-term">UWP apps using JavaScript and HTML</span>, see [Animating your UI (HTML)](https://msdn.microsoft.com/library/windows/apps/hh465165).
+**Note**  For info about animations for <span class="legacy-term">UWP apps using JavaScript and HTML</span>, see [Animating your UI (HTML)](https://docs.microsoft.com/previous-versions/windows/apps/hh465165(v=win.10)).
 
 ### Next step
 

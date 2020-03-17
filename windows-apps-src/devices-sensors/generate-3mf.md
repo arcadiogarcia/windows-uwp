@@ -1,45 +1,35 @@
 ---
-author: PatrickFarley
 Description: Describes the structure of the 3D Manufacturing Format file type and how it can be created and manipulated with the Windows.Graphics.Printing3D API.
 MS-HAID: dev\_devices\_sensors.generate\_3mf
 MSHAttr: PreferredLib:/library/windows/apps
 Search.Product: eADQiWindows 10XVcnh
 title: Generate a 3MF package
 ms.assetid: 968d918e-ec02-42b5-b50f-7c175cc7921b
-ms.author: pafarley
 ms.date: 02/08/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
-
 # Generate a 3MF package
-
-
-
 
 **Important APIs**
 
--   [**Windows.Graphics.Printing3D**](https://msdn.microsoft.com/library/windows/apps/windows.graphics.printing3d.aspx)
+-   [**Windows.Graphics.Printing3D**](https://docs.microsoft.com/uwp/api/windows.graphics.printing3d)
 
-\[Some information relates to pre-released product which may be substantially modified before it's commercially released. Microsoft makes no warranties, express or implied, with respect to the information provided here.\]
-
-This guide describes the structure of the 3D Manufacturing Format document and how it can be created and manipulated with the [**Windows.Graphics.Printing3D**](https://msdn.microsoft.com/library/windows/apps/windows.graphics.printing3d.aspx) API.
+This guide describes the structure of the 3D Manufacturing Format document and how it can be created and manipulated with the [**Windows.Graphics.Printing3D**](https://docs.microsoft.com/uwp/api/windows.graphics.printing3d) API.
 
 ## What is 3MF?
 
 The 3D Manufacturing Format is a set of conventions for using XML to describe the appearance and structure of 3D models for the purpose of manufacturing (3D printing). It defines a set of parts (some required and some optional) and their relationships, with the goal of providing all necessary information to a 3D manufacturing device. A data set that adheres to the 3D Manufacturing Format can be saved as a file with the .3mf extension.
 
-In Windows 10, the [**Printing3D3MFPackage**](https://msdn.microsoft.com/library/windows/apps/windows.graphics.printing3d.printing3d3mfpackage.aspx) class in the **Windows.Graphics.Printing3D** namespace is analogous to a single .3mf file, and other classes map to the particular XML elements in the file. This guide describes how each of the main parts of a 3MF document can be created and set programmatically, how the 3MF Materials Extension can be utilized, and how a **Printing3D3MFPackage** object can be converted and saved as a .3mf file. For more information on the standards of 3MF or the 3MF Materials Extension, see the [3MF Specification](http://3mf.io/what-is-3mf/3mf-specification/).
+In Windows 10, the [**Printing3D3MFPackage**](https://docs.microsoft.com/uwp/api/windows.graphics.printing3d.printing3d3mfpackage) class in the **Windows.Graphics.Printing3D** namespace is analogous to a single .3mf file, and other classes map to the particular XML elements in the file. This guide describes how each of the main parts of a 3MF document can be created and set programmatically, how the 3MF Materials Extension can be utilized, and how a **Printing3D3MFPackage** object can be converted and saved as a .3mf file. For more information on the standards of 3MF or the 3MF Materials Extension, see the [3MF Specification](https://3mf.io/what-is-3mf/3mf-specification/).
 
 <!-- >**Note** This guide describes how to construct a 3MF document from scratch. If you wish to make changes to an already existing 3MF document provided in the form of a .3mf file, you simply need to convert it to a **Printing3D3MFPackage** and alter the contained classes/properties in the same way (see [link]) below). -->
 
 
 ## Core classes in the 3MF structure
 
-The **Printing3D3MFPackage** class represents a complete 3MF document, and at the core of a 3MF document is its model part, represented by the [**Printing3DModel**](https://msdn.microsoft.com/library/windows/apps/windows.graphics.printing3d.printing3dmodel.aspx) class. Most of the information we wish to specify about a 3D model will be stored by setting the properties of the **Printing3DModel** class and the properties of their underlying classes.
+The **Printing3D3MFPackage** class represents a complete 3MF document, and at the core of a 3MF document is its model part, represented by the [**Printing3DModel**](https://docs.microsoft.com/uwp/api/windows.graphics.printing3d.printing3dmodel) class. Most of the information we wish to specify about a 3D model will be stored by setting the properties of the **Printing3DModel** class and the properties of their underlying classes.
 
 [!code-cs[InitClasses](./code/3dprinthowto/cs/Generate3MFMethods.cs#SnippetInitClasses)]
 
@@ -47,13 +37,13 @@ The **Printing3D3MFPackage** class represents a complete 3MF document, and at th
 
 ## Metadata
 
-The model part of a 3MF document can hold metadata in the form of key/value pairs of strings stored in the **Metadata** property. There are a number of predefined names of metadata, but other pairs can be added as part of an extension (described in more detail in the [3MF specification](http://3mf.io/what-is-3mf/3mf-specification/)). It is up to the receiver of the package (a 3D manufacturing device) to determine whether and how to handle metadata, but it is good practice to include as much basic info as possible in the 3MF package:
+The model part of a 3MF document can hold metadata in the form of key/value pairs of strings stored in the **Metadata** property. There are a number of predefined names of metadata, but other pairs can be added as part of an extension (described in more detail in the [3MF specification](https://3mf.io/what-is-3mf/3mf-specification/)). It is up to the receiver of the package (a 3D manufacturing device) to determine whether and how to handle metadata, but it is good practice to include as much basic info as possible in the 3MF package:
 
 [!code-cs[Metadata](./code/3dprinthowto/cs/Generate3MFMethods.cs#SnippetMetadata)]
 
 ## Mesh data
 
-In the context of this guide, a mesh is a body of 3-dimensional geometry constructed from a single set of vertices (though it does not have to appear as a single solid). A mesh part is represented by the [**Printing3DMesh**](https://msdn.microsoft.com/library/windows/apps/windows.graphics.printing3d.printing3dmesh.aspx) class. A valid mesh object must contain information about the location of all of its vertices as well as all the triangle faces that exist between certain sets of vertices.
+In the context of this guide, a mesh is a body of 3-dimensional geometry constructed from a single set of vertices (though it does not have to appear as a single solid). A mesh part is represented by the [**Printing3DMesh**](https://docs.microsoft.com/uwp/api/windows.graphics.printing3d.printing3dmesh) class. A valid mesh object must contain information about the location of all of its vertices as well as all the triangle faces that exist between certain sets of vertices.
 
 The following method adds vertices to a mesh and then gives them locations in 3D space:
 
@@ -122,7 +112,7 @@ In order to dictate which materials are mapped to which vertices on each triangl
 
 ## Components and build
 
-The component structure allows the user to place more than one mesh object in a printable 3D model. A [**Printing3DComponent**](https://msdn.microsoft.com/library/windows/apps/windows.graphics.printing3d.printing3dcomponent.aspx) object contains a single mesh and a list of references to other components. This is actually a list of [**Printing3DComponentWithMatrix**](https://msdn.microsoft.com/library/windows/apps/windows.graphics.printing3d.printing3dcomponentwithmatrix.aspx) objects. **Printing3DComponentWithMatrix** objects each contain a **Printing3DComponent** and, importantly, a transform matrix that applies to the mesh and contained components of said **Printing3DComponent**.
+The component structure allows the user to place more than one mesh object in a printable 3D model. A [**Printing3DComponent**](https://docs.microsoft.com/uwp/api/windows.graphics.printing3d.printing3dcomponent) object contains a single mesh and a list of references to other components. This is actually a list of [**Printing3DComponentWithMatrix**](https://docs.microsoft.com/uwp/api/windows.graphics.printing3d.printing3dcomponentwithmatrix) objects. **Printing3DComponentWithMatrix** objects each contain a **Printing3DComponent** and, importantly, a transform matrix that applies to the mesh and contained components of said **Printing3DComponent**.
 
 For example, a model of a car might consist of a "Body" **Printing3DComponent** that holds the mesh for the car's body. The "Body" component may then contain references to four different **Printing3DComponentWithMatrix** objects, which all reference the same **Printing3DComponent** with the "Wheel" mesh and contain four different transform matrices (mapping the wheels to four different positions on the car's body). In this scenario, the "Body" mesh and "Wheel" mesh would each only need to be stored once, even though the final product would feature five meshes in total.
 
@@ -135,7 +125,11 @@ Now that we have a model, with defined materials and components, we can save it 
 
 [!code-cs[SavePackage](./code/3dprinthowto/cs/Generate3MFMethods.cs#SnippetSavePackage)]
 
-From here, we can either initiate a print job within the app (see [3D printing from your app](https://msdn.microsoft.com/library/windows/apps/mt204541.aspx)), or save this **Printing3D3MFPackage** as a .3mf file.
+This function ensures the texture is specified correctly.
+
+[!code-cs[FixTexture](./code/3dprinthowto/cs/Generate3MFMethods.cs#SnippetFixTexture)]
+
+From here, we can either initiate a print job within the app (see [3D printing from your app](https://docs.microsoft.com/windows/uwp/devices-sensors/3d-print-from-app)), or save this **Printing3D3MFPackage** as a .3mf file.
 
 The following method takes a finished **Printing3D3MFPackage** and saves its data to a .3mf file.
 
@@ -143,7 +137,7 @@ The following method takes a finished **Printing3D3MFPackage** and saves its dat
 
 ## Related topics
 
-[3D printing from your app](https://msdn.microsoft.com/windows/uwp/devices-sensors/3d-print-from-app)  
+[3D printing from your app](https://docs.microsoft.com/windows/uwp/devices-sensors/3d-print-from-app)  
 [3D printing UWP sample](https://github.com/Microsoft/Windows-universal-samples/tree/master/Samples/3DPrinting)
  
 

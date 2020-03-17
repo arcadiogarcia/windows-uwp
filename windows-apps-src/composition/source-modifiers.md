@@ -1,14 +1,10 @@
 ---
-author: jwmsft
 title: Pull-to-refresh with source modifiers
 description: Create custom Pull-to-Refresh controls using SourceModifiers
-ms.author: jimwalk
 ms.date: 10/10/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, animation
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
 # Pull-to-refresh with source modifiers
 
@@ -46,7 +42,7 @@ For the end user experience, we want to create the effect of "resistance" as the
 
 ![List with pull-to-refresh](images/animation/city-list.gif)
 
-The working code for this experience can be found in the [Window UI Dev Labs repo on GitHub](https://github.com/Microsoft/WindowsUIDevLabs). Here is the step-by-step walk through of building that experience.
+The working code for this experience can be found in the [Window UI Dev Labs repo on GitHub](https://github.com/microsoft/WindowsCompositionSamples). Here is the step-by-step walk through of building that experience.
 In your XAML markup code, you have the following:
 
 ```xaml

@@ -1,14 +1,10 @@
 ---
-author: jwmsft
 title: Custom manipulations with InteractionTracker
 description: Use the InteractionTracker APIs to create custom manipulation experiences.
-ms.author: jimwalk
 ms.date: 10/10/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, animation
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
 # Custom manipulation experiences with InteractionTracker
 
@@ -149,7 +145,7 @@ private void InteractionTrackerSetup(Compositor compositor, Visual hitTestRoot)
     tracker.MinPosition = new Vector3(-1000f);
     tracker.MaxPosition = new Vector3(1000f);
 
-    // #3 Setup the VisualInteractionSourc
+    // #3 Setup the VisualInteractionSource
     var source = VisualInteractionSource.Create(hitTestRoot);
 
     // #4 Set the properties for the VisualInteractionSource

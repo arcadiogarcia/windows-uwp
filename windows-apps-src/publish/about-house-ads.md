@@ -1,23 +1,20 @@
 ---
-author: jnHs
 Description: You can create an ad to promote one of your apps in your other apps, for free. We call these house ads.
 title: About house ads
 ms.assetid: C6507C8B-351B-49E7-A194-35AB05BC3358
-ms.author: wdg-dev-content
-ms.date: 06/19/2017
+ms.date: 02/18/2020
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp
-localizationpriority: high
+ms.localizationpriority: medium
 ---
-
 # About house ads
 
+>[!WARNING]
+> As of June 1, 2020, the Microsoft Ad Monetization platform for Windows UWP apps will be shut down. [Learn more](https://social.msdn.microsoft.com/Forums/windowsapps/en-US/db8d44cb-1381-47f7-94d3-c6ded3fea36f/microsoft-ad-monetization-platform-shutting-down-june-1st?forum=aiamgr)
 
 You can create an ad to promote one of your apps in your other apps for free. We call these *house ads*.
 
-House ads will only appear in your own apps that are configured to show ads from Microsoft.
+House ads will only appear in your own apps that are configured to [show ads from Microsoft](../monetize/display-ads-in-your-app.md).
 
 To set up a house ad, select **House ad (free)** as the **Campaign type** when you [create an ad campaign](create-an-ad-campaign-for-your-app.md). The ad will automatically be eligible to appear in any app of yours that meets the following criteria:
 

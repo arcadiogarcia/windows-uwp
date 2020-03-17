@@ -1,24 +1,21 @@
 ---
-author: normesta
 ms.assetid: 76776b0f-3163-48c9-835b-3f4213968079
 title: Data access
 description: This section discusses storing data on the device in a private database and using object relational mapping in Universal Windows Platform (UWP) apps.
-ms.author: normesta
-ms.date: 02/08/2017
+ms.date: 11/13/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, data, database, relational, tables, sqlite
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
 # Data access
 
-
-This section discusses storing data on the device in a private database and using object relational mapping in Universal Windows Platform (UWP) apps.
-
-SQLite is included in the UWP SDK. Entity Framework Core works with SQLite in UWP apps. Use these technologies to develop for offline / intermittent connectivity scenarios, and to persist data across app sessions.
+You can store data on the user's device by using a SQLite database. You can also connect your app directly to a SQL Server database without having to use any sort of service layer.
 
 | Topic | Description|
 |-------|------------|
-| [Entity framework Core with SQLite for C# apps](entity-framework-7-with-sqlite-for-csharp-apps.md) | Entity Framework (EF) is an object-relational mapper that enables you to work with relational data using domain-specific objects. This article explains how you can use Entity Framework Core with a SQLite database in a Universal Windows app. |
-| [SQLite databases](sqlite-databases.md) | SQLite is a server-less, embedded database engine. This article explains how to use the SQLite library included in the SDK, package your own SQLite library in a Universal Windows app, or build it from the source. |
+| [Use a SQLite database in a UWP app](sqlite-databases.md) | Shows you how to use SQLite to store and retrieve data in a light-weight database on the users device. SQLite is a server-less, embedded database engine. |
+| [Use a SQL server database in a UWP app](sql-server-databases.md) | Shows you how to connect directly to a SQL Server database and then store and retrieve data by using classes in the [System.Data.SqlClient](https://docs.microsoft.com/dotnet/api/system.data.sqlclient) namespace. No service layer required. |
+
+## Related topics
+
+* [Customer Orders Database sample](https://github.com/Microsoft/Windows-appsample-customers-orders-database)

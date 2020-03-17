@@ -1,21 +1,14 @@
 ---
-author: stevewhims
-Description: Design your app to be global-ready by appropriately formatting dates, times, numbers, phone numbers, and currencies.
-title: Use global-ready formats
+Description: Design your app to be global-ready by appropriately formatting dates, times, numbers, phone numbers, and currencies. You'll then be able later to adapt your app for additional cultures, regions, and languages in the global market.
+title: Globalize your date/time/number formats
 ms.assetid: 6ECE8BA4-9A7D-49A6-81EE-AB2BE7F0254F
-label: Use global-ready formats
 template: detail.hbs
-ms.author: stwhi
-ms.date: 11/06/2017
+ms.date: 11/07/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
-keywords: windows 10, uwp, globalization, localization
-localizationpriority: medium
+keywords: windows 10, uwp, globalization, localizability, localization
+ms.localizationpriority: medium
 ---
-
-
-# Use global-ready formats
+# Globalize your date/time/number formats
 
 Design your app to be global-ready by appropriately formatting dates, times, numbers, phone numbers, and currencies. You'll then be able later to adapt your app for additional cultures, regions, and languages in the global market.
 
@@ -23,41 +16,60 @@ Design your app to be global-ready by appropriately formatting dates, times, num
 
 When creating your app, if you think more broadly than a single language and culture then you'll have fewer (if any) unexpected issues when your app grows into new markets. For example, dates, times, numbers, calendars, currency, telephone numbers, units of measurement, and paper sizes are all items that can be displayed differently in different cultures or languages.
 
-## Format dates and times appropriately
+Different regions and cultures use different date and time formats. These include conventions for the order of day and month in the date, for the separation of hours and minutes in the time, and even for what punctuation is used as a separator. In addition, dates may be displayed in various long formats ("Wednesday, March 28, 2012") or short formats ("3/28/12"), which vary across cultures. And, of course, the names and abbreviations for the days of the week and months of the year differ between languages.
 
-There are many different date and time formats in use globally. Different regions and cultures use different conventions for the order of day and month in the date, for the separation of hours and minutes in the time, and even for what punctuation is used as a separator. In addition, dates may be displayed in various long formats ("Wednesday, March 28, 2012") or short formats ("3/28/12"), which can vary across cultures. And, of course, the names and abbreviations for the days of the week and months of the year differ between languages.
+You can preview the formats used for different languages. Go to **Settings** > **Time & Language** > **Region & language**, and click **Additional date, time, & regional settings** > **Change date, time, or number formats**. On the **Formats** tab, select a language from the **Format** drop-down and preview the formats in **Examples**.
 
-If you need to allow users to choose a date, or to select a time, then use the standard [calendar, date, and time controls](../controls-and-patterns/date-and-time.md). These automatically use the date and time formats for the user's preferred language and region.
+This topic uses the terms "user profile language list", "app manifest language list", and "app runtime language list". For details on exactly what those terms mean and how to access their values, see [Understand user profile languages and app manifest languages](manage-language-and-region.md).
 
-If you need to display dates or times yourself, use the [**DateTimeFormatter**](/uwp/api/windows.globalization.datetimeformatting?branch=live) class to automatically display the user's preferred format for dates and times. The code below formats a given **DateTime** by using the preferred language and region. For example, if the current date is Nov 6 2017, then if the user prefers English (United States) the formatter gives "11/6/2017". And if the user prefers German (Germany) then it gives "06.11.2017".
+## Format dates and times for the app runtime language list
 
-**C#**
+If you need to allow users to choose a date, or to select a time, then use the standard [calendar, date, and time controls](../controls-and-patterns/date-and-time.md). These automatically use the best date and time format for the app runtime language list.
+
+If you need to display dates or times yourself then you can use the [**DateTimeFormatter**](/uwp/api/windows.globalization.datetimeformatting?branch=live) class. By default, **DateTimeFormatter** automatically uses the best date and time format for the app runtime language list. So, the code below formats a given **DateTime** in the best way for that list. As an example, assume that your app manifest language list includes English (United States), which is also your default, and German (Germany). If the current date is Nov 6 2017 and the user profile language list contains German (Germany) first, then the formatter gives "06.11.2017". If the user profile language list contains English (United States) first (or if it contains neither English nor German), then the formatter gives "11/6/2017" (since "en-US" matches, or is used as the default).
+
 ```csharp
     // Use the DateTimeFormatter class to display dates and times using basic formatters.
 
-    var userLanguages = Windows.System.UserProfile.GlobalizationPreferences.Languages;
-
-    var userShortDateFormatter = new Windows.Globalization.DateTimeFormatting.DateTimeFormatter("shortdate", userLanguages);
-    var userShortTimeFormatter = new Windows.Globalization.DateTimeFormatting.DateTimeFormatter("shorttime", userLanguages);
+    var shortDateFormatter = new Windows.Globalization.DateTimeFormatting.DateTimeFormatter("shortdate");
+    var shortTimeFormatter = new Windows.Globalization.DateTimeFormatting.DateTimeFormatter("shorttime");
 
     var dateTimeToFormat = DateTime.Now;
 
-    var shortDate = userShortDateFormatter.Format(dateTimeToFormat);
-    var shortTime = userShortTimeFormatter.Format(dateTimeToFormat);
+    var shortDate = shortDateFormatter.Format(dateTimeToFormat);
+    var shortTime = shortTimeFormatter.Format(dateTimeToFormat);
 
     var results = "Short Date: " + shortDate + "\n" +
                   "Short Time: " + shortTime;
 ```
 
-You can test the code above on your own PC by changing the display language in **Settings** > **Time & Language** > **Region & language** > **Languages**. Add German (Germany), make it the default, and run the code again.
+You can test the code above on your own PC like this.
+
+- Make sure that you have resource files in your project qualified for both "en-US" and "de-DE" (see [Tailor your resources for language, scale, high contrast, and other qualifiers](../../app-resources/tailor-resources-lang-scale-contrast.md)).
+- Change your user profile language list in **Settings** > **Time & Language** > **Region & language** > **Languages**. Add German (Germany), make it the default, and run the code again.
+
+## Format dates and times for the user profile language list
+
+Remember that, by default, **DateTimeFormatter** matches the app runtime language list. That way, if you display strings such as "The date is &lt;date&gt;", then the language will match the date format.
+
+If for whatever reason you want to format dates and/or times only according to the user profile language list, then you can do that using code like the example below. But if you do so then understand that the user can choose a language for which your app doesn't have translated strings. For example, if your app is not localized into German (Germany), but the user chooses that as their preferred language, then that could result in the display of arguably odd-looking strings such as "The date is 06.11.2017".
+
+```csharp
+    // Use the DateTimeFormatter class to display dates and times using basic formatters.
+
+    var userLanguages = Windows.System.UserProfile.GlobalizationPreferences.Languages;
+
+    var shortDateFormatter = new Windows.Globalization.DateTimeFormatting.DateTimeFormatter("shortdate", userLanguages);
+
+    var results = "Short Date: " + shortDateFormatter.Format(DateTime.Now);
+```
 
 ## Format numbers and currencies appropriately
 
-Different cultures format numbers differently. Format differences may include how many decimal digits to display, what characters to use as decimal separators, and what currency symbol to use. Use classes in the [**NumberFormatting**](/uwp/api/windows.globalization.numberformatting?branch=live) namespace to display decimal, percent, or permille numbers, and currencies. In most cases you simply display numbers or currencies according to the user's current preferences. But you may also use the formatters to display a currency for a particular region or format.
+Different cultures format numbers differently. Format differences may include how many decimal digits to display, what characters to use as decimal separators, and what currency symbol to use. Use classes in the [**NumberFormatting**](/uwp/api/windows.globalization.numberformatting?branch=live) namespace to display decimal, percent, or permille numbers, and currencies. Most of the time, you will want these formatter classes to use the best format for the user profile. But you may use the formatters to display a currency for any region or format.
 
-This example shows how to display currencies per the user's preferred language and region, or for a specific given currency system.
+This example shows how to display currencies both per the user profile, and for a specific given currency system.
 
-**C#**
 ```csharp
     // This scenario uses the CurrencyFormatter class to format a number as a currency.
 
@@ -104,7 +116,6 @@ Phone numbers are formatted differently across regions. The number of digits, ho
 
 The example below shows how to use **PhoneNumberFormatter** to format a phone number as it is being entered. Each time text changes in a **TextBox** named phoneNumberInputTextBox, the contents of the text box are formatted using the current default region and displayed in a **TextBlock** named phoneNumberOutputTextBlock. For demonstration purposes, the string is also formatted using the region for New Zealand, and displayed in a TextBlock named phoneNumberOutputTextBlockNZ.
   
-**C#**
 ```csharp
     using Windows.Globalization.PhoneNumberFormatting;
 
@@ -136,25 +147,27 @@ The example below shows how to use **PhoneNumberFormatter** to format a phone nu
 
 You can test the code above on your own PC by changing the country or region in **Settings** > **Time & Language** > **Region & language** > **Country or region**. Choose a country or region (perhaps New Zealand to confirm that the formats match), and run the code again. For test data, you can do a web search for the phone number of a business in New Zealand.
 
-## Respect the user's language and cultural preferences
+## The user's language and cultural preferences
 
-For scenarios where you provide different functionality based on the user's language, region, or cultural preferences, Windows gives you a way to access those preferences, through [**Windows.System.UserProfile.GlobalizationPreferences**](/uwp/api/windows.system.userprofile.globalizationpreferences?branch=live). When needed, use the **GlobalizationPreferences** class to get the value of the user's current geographic region, preferred languages, preferred currencies, and so on.
+For scenarios where you wish to provide different functionality based solely on the user's language, region, or cultural preferences, Windows gives you a way to access those preferences, through [**Windows.System.UserProfile.GlobalizationPreferences**](/uwp/api/windows.system.userprofile.globalizationpreferences?branch=live). When needed, use the **GlobalizationPreferences** class to get the value of the user's current geographic region, preferred languages, preferred currencies, and so on. But remember that if your app's strings/images aren't localized for the user's preferred language then dates and times and other data formatted for that preferred language won't match the strings that you display.
 
 ## Important APIs
 
-[DateTimeFormatter](/uwp/api/windows.globalization.datetimeformatting?branch=live)
-[NumberFormatting](/uwp/api/windows.globalization.numberformatting?branch=live)
-[Calendar](/uwp/api/windows.globalization.calendar?branch=live)
-[PhoneNumberFormatting](/uwp/api/windows.globalization.phonenumberformatting?branch=live)
-[GlobalizationPreferences](/uwp/api/windows.system.userprofile.globalizationpreferences?branch=live)
+* [DateTimeFormatter](/uwp/api/windows.globalization.datetimeformatting?branch=live)
+* [NumberFormatting](/uwp/api/windows.globalization.numberformatting?branch=live)
+* [Calendar](/uwp/api/windows.globalization.calendar?branch=live)
+* [PhoneNumberFormatting](/uwp/api/windows.globalization.phonenumberformatting?branch=live)
+* [GlobalizationPreferences](/uwp/api/windows.system.userprofile.globalizationpreferences?branch=live)
 
 ## Related topics
 
-[calendar, date, and time controls](../controls-and-patterns/date-and-time.md)
+* [Calendar, date, and time controls](../controls-and-patterns/date-and-time.md)
+* [Understand user profile languages and app manifest languages](manage-language-and-region.md)
+* [Tailor your resources for language, scale, high contrast, and other qualifiers](../../app-resources/tailor-resources-lang-scale-contrast.md)
 
 ## Samples
 
-* [Calendar details and math sample](http://go.microsoft.com/fwlink/p/?linkid=231636)
-* [Date and time formatting sample](http://go.microsoft.com/fwlink/p/?linkid=231618)
-* [Globalization preferences sample](http://go.microsoft.com/fwlink/p/?linkid=231608)
-* [Number formatting and parsing sample](http://go.microsoft.com/fwlink/p/?linkid=231620)
+* [Calendar details and math sample](https://code.msdn.microsoft.com/windowsapps/Calendar-details-and-math-b1683bb7)
+* [Date and time formatting sample](https://code.msdn.microsoft.com/windowsapps/Date-and-time-formatting-2361f348)
+* [Globalization preferences sample](https://code.msdn.microsoft.com/windowsapps/Globalization-preferences-6654eb36)
+* [Number formatting and parsing sample](https://code.msdn.microsoft.com/windowsapps/Number-formatting-and-bb10ba3d)

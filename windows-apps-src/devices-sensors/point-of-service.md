@@ -1,27 +1,18 @@
 ---
-author: muhsinking
-title: Point of service
+title: Point of Service
 description: This section contains articles on how to use various features of the Point of Service namespace.
-ms.author: mukin
-ms.date: 05/11/2017
+ms.date: 10/04/2018
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
-# Point of service
+# Point of Service
+This section contains articles on how to use [Windows.Devices.PointOfService](https://docs.microsoft.com/uwp/api/windows.devices.pointofservice) to interact with peripherals found in retail and hospitality environments from Universal Windows Applications.
 
-
-This section contains articles on how to use Point Of Service (POS) peripherals with Universal Windows Platform (UWP) apps. 
-
-**Important APIs**
-- [Windows.Devices.PointOfService](https://docs.microsoft.com/en-us/uwp/api/windows.devices.pointofservice)
-
-|Topic|Description|
-|--------|------------------|
-| [Getting started](pos-get-started.md) | This article will help you get started with the point of service UWP APIs. |
-| [Supported peripherals](pos-device-support.md) | This article provides device support information for each POS device family. |
-| [Advanced connectivity](pos-advanced-connectivity.md) | This article provides information on how to connect to your network and bluetooth point of service peripherals from within your application. | 
-| [Deploy scanner profiles with MDM](deploy-scanner-profiles-with-mdm.md) | This article provides information on how barcode scanner profiles can be deployed with an MDM server. |
-| [Epson ESC/POS with formatting](epson-esc-pos-with-formatting.md)   | This article provides an overview of the Epson ESC/POS command language and how to use it with the [**Windows.Devices.PointOfService**](https://msdn.microsoft.com/library/windows/apps/windows.devices.pointofservice.aspx) APIs. |
+| Topic | Description |
+|------|------------|
+| [Basics](pos-basics.md) | This article will help you get started with the point of service UWP APIs. |
+| [Hardware support](pos-device-support.md) | List of known devices that are compatible with [Windows.Devices.PointOfService](https://docs.microsoft.com/uwp/api/Windows.Devices.PointOfService) UWP APIs. |
+| [Barcode Scanner](pos-barcodescanner.md) | Index of articles on barcode scanner. |
+| [Magnetic stripe reader](pos-magnetic-stripe-reader.md) | Index of articles on magnetic stripe reader.
+| [POSPrinter](pos-printer.md) | Index of articles on POSPrinter. |

@@ -1,18 +1,16 @@
 ---
-author: mcleanbyron
 ms.assetid: 9ca1f880-2ced-46b4-8ea7-aba43d2ff863
 description: Learn about known issues for the current release of the Microsoft Advertising SDK.
 title: Known issues and troubleshooting for ads in apps
-ms.author: mcleans
-ms.date: 08/23/2017
+ms.date: 02/18/2020
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, ads, advertising, known issues, troubleshooting
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
-
 # Known issues and troubleshooting for ads in apps
+
+>[!WARNING]
+> As of June 1, 2020, the Microsoft Ad Monetization platform for Windows UWP apps will be shut down. [Learn more](https://social.msdn.microsoft.com/Forums/windowsapps/en-US/db8d44cb-1381-47f7-94d3-c6ded3fea36f/microsoft-ad-monetization-platform-shutting-down-june-1st?forum=aiamgr)
 
 This topic lists the known issues with the current release of the Microsoft Advertising SDK. For additional troubleshooting guidance, see the following topics.
 
@@ -21,7 +19,7 @@ This topic lists the known issues with the current release of the Microsoft Adve
 
 ## AdControl interface unknown in XAML
 
-The XAML markup for an [AdControl](https://msdn.microsoft.com/library/windows/apps/microsoft.advertising.winrt.ui.adcontrol.aspx) may incorrectly show a blue curvy line implying that the interface is unknown. This occurs only when targeting x86, and it may be ignored.
+The XAML markup for an [AdControl](https://docs.microsoft.com/uwp/api/microsoft.advertising.winrt.ui.adcontrol) may incorrectly show a blue curvy line implying that the interface is unknown. This occurs only when targeting x86, and it may be ignored.
 
 ## lastError from previous ad request
 
@@ -39,15 +37,15 @@ If you have created an ad recently (less than a day), it might not be available 
 
 There are many reasons you may see no ads, including network errors. Other reasons might include:
 
-* Selecting an ad unit in Windows Dev Center with a size that is greater or less than the size of the **AdControl** in your app's code.
+* Selecting an ad unit in Partner Center with a size that is greater or less than the size of the **AdControl** in your app's code.
 
 * Ads will not appear if you're using a [test mode value](set-up-ad-units-in-your-app.md#test-ad-units) for your ad unit ID when running a live app.
 
 * If you created a new ad unit ID in the past half-hour, you might not see an ad until the servers propagate new data through the system. Existing IDs that have shown ads before should show ads immediately.
 
-If you can see test ads in the app, your code is working and is able to display ads. If you encounter issues, contact [product support](https://go.microsoft.com/fwlink/p/?LinkId=331508). On that page, choose **In-App Advertising**.
+If you can see test ads in the app, your code is working and is able to display ads. If you encounter issues, contact [product support](https://developer.microsoft.com/windows/support). On that page, choose **Contact us**.
 
-You can also post a question in the [forum](http://go.microsoft.com/fwlink/p/?LinkId=401266).
+You can also post a question in the [forum](https://social.msdn.microsoft.com/forums/windowsapps/en-US/home?category=windowsapps).
 
 ## Test ads are showing in your app instead of live ads
 
@@ -57,10 +55,11 @@ Test ads can be shown, even when you are expecting live ads. This can happen in 
 
 * Side-loaded apps or apps that are running in the emulator will not show live ads.
 
-When a live ad unit is serving test ads, the ad unit’s status shows **Active and serving test ads** in Windows Dev Center. This does not currently apply to phone apps.
+When a live ad unit is serving test ads, the ad unit’s status shows **Active and serving test ads** in Partner Center. This does not currently apply to phone apps.
 
 
 <span id="reference_errors"/>
+
 ## Reference errors caused by targeting Any CPU in your project
 
 When using the Microsoft Advertising SDK, you cannot target **Any CPU** in your project. If your project targets the **Any CPU** platform, you may see a warning after adding the reference similar to this one.
@@ -82,13 +81,14 @@ When you create your app packages for store submission (as shown in the followin
 JavaScript/HTML apps must not place elements into the reserved MAX-10 range of z-order. The sole exception is an interrupt overlay, such as an inbound call notification for a Skype app.
 
 <span id="bkmk-ui"/>
+
 ## Do not use borders
 
 Setting border-related properties inherited by the **AdControl** from its parent class will cause the ad placement to be wrong.
 
 ## More Information
 
-For more information about the latest known issues and to post questions related to the Microsoft Advertising SDK, visit the [forum](http://go.microsoft.com/fwlink/p/?LinkId=401266).
+For more information about the latest known issues and to post questions related to the Microsoft Advertising SDK, visit the [forum](https://social.msdn.microsoft.com/forums/windowsapps/en-US/home?category=windowsapps).
 
  
 

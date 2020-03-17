@@ -1,15 +1,11 @@
 ---
-author: joannaleecy
 title: Set up the game project
 description: The first step in assembling your game is to set up a project in Microsoft Visual Studio in such a way that you minimize the amount of code infrastructure work you need to do.
 ms.assetid: 9fde90b3-bf79-bcb3-03b6-d38ab85803f2
-ms.author: joanlee
 ms.date: 10/24/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, games, setup, directx
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
 
 # Set up the game project
@@ -52,7 +48,7 @@ The **App** class inherits from the **IFrameworkView** class.
 
 ### Inspect **App.h**.
 
-Let's quickly look at the 5 methods in **App.h** &mdash; [**Initialize**](https://msdn.microsoft.com/library/windows/apps/hh700495), [**SetWindow**](https://msdn.microsoft.com/library/windows/apps/hh700509), [**Load**](https://msdn.microsoft.com/library/windows/apps/hh700501), [**Run**](https://msdn.microsoft.com/library/windows/apps/hh700505), and [**Uninitialize**](https://msdn.microsoft.com/library/windows/apps/hh700523) when implementing the [**IFrameworkView**](https://msdn.microsoft.com/library/windows/apps/hh700469) interface that defines a view provider. These methods are run by the app singleton that is created when your game is launched, and load all your app's resources as well as connect the appropriate event handlers.
+Let's quickly look at the 5 methods in **App.h** &mdash; [**Initialize**](https://docs.microsoft.com/uwp/api/windows.applicationmodel.core.iframeworkview.initialize), [**SetWindow**](https://docs.microsoft.com/uwp/api/windows.applicationmodel.core.iframeworkview.setwindow), [**Load**](https://docs.microsoft.com/uwp/api/windows.applicationmodel.core.iframeworkview.load), [**Run**](https://docs.microsoft.com/uwp/api/windows.applicationmodel.core.iframeworkview.run), and [**Uninitialize**](https://docs.microsoft.com/uwp/api/windows.applicationmodel.core.iframeworkview.uninitialize) when implementing the [**IFrameworkView**](https://docs.microsoft.com/uwp/api/windows.applicationmodel.core.coreapplication.run) interface that defines a view provider. These methods are run by the app singleton that is created when your game is launched, and load all your app's resources as well as connect the appropriate event handlers.
 
 ```cpp
     // Main entry point for our app. Connects the app with the Windows shell and handle application lifecycle events.
@@ -88,9 +84,9 @@ int main(Platform::Array<Platform::String^>^)
 }
 ```
 
-In this method, it creates an instance of the Direct3D view provider from the view provider factory (**Direct3DApplicationSource**, defined in **App.h**), and passes it to the app singleton by calling ([**CoreApplication::Run**](https://msdn.microsoft.com/library/windows/apps/hh700469)). This means that the starting point for your game lives in the body of the implementation of the [**IFrameworkView::Run**](https://msdn.microsoft.com/library/windows/apps/hh700505) method, and in this case, it's the **App::Run**. 
+This method creates an instance of the Direct3D view provider from the view provider factory (**Direct3DApplicationSource**, defined in `App.h`), and passes it to the app singleton by calling [**CoreApplication::Run**](/uwp/api/windows.applicationmodel.core.coreapplication.run). The methods of your framework view (which is the **App** class in this example) are called in the order **Initialize**-**SetWindow**-**Load**-**OnActivated**-**Run**-**Uninitialize**. Calling **CoreApplication::Run** kicks off that lifycycle. The main loop of your game resides in the body of the implementation of the [**IFrameworkView::Run** method](/uwp/api/windows.applicationmodel.core.iframeworkview.run), and in this case, it's the **App::Run**.
 
-Scroll to find the **App::Run** method in **App.cpp**. Here's the code:
+Scroll to find the **App::Run** method in **App.cpp**. Here's the code.
 
 ```cpp
 //This method is called after the window becomes active.
@@ -117,7 +113,7 @@ void App::Run()
 }
 ```
 
-What this method does: If the window for your game isn't closed, it dispatches all events, updates the timer, then renders and presents the results of your graphics pipeline. We'll talk about this in greater detail in [Define the UWP app framework](tutorial--building-the-games-metro-style-app-framework.md), [Rendering framework I: Intro to rendering](tutorial--assembling-the-rendering-pipeline.md), and  [Rendering framework II: Game rendering](tutorial-game-rendering.md). At this point, you should have a sense of the basic code structure of a UWP DirectX game.
+What this method does: If the window for your game isn't closed, it dispatches all events, updates the timer, then renders and presents the results of your graphics pipeline. We'll talk about this in greater detail in [Define the UWP app framework](tutorial--building-the-games-uwp-app-framework.md), [Rendering framework I: Intro to rendering](tutorial--assembling-the-rendering-pipeline.md), and  [Rendering framework II: Game rendering](tutorial-game-rendering.md). At this point, you should have a sense of the basic code structure of a UWP DirectX game.
 
 ## Review and update the package.appxmanifest file
 
@@ -128,7 +124,7 @@ Launch the **manifest designer** by double-clicking the **Package.appxmanifest**
 
 ![screenshot of the package.appx manifest editor.](images/simple-dx-game-setup-app-manifest.png)
 
-For more info about the **package.appxmanifest** file and packaging, see [Manifest Designer](https://msdn.microsoft.com/library/windows/apps/br230259.aspx). For now, take a look at the **Capabilities** tab and look at the options provided.
+For more info about the **package.appxmanifest** file and packaging, see [Manifest Designer](https://docs.microsoft.com/previous-versions/br230259(v=vs.140)). For now, take a look at the **Capabilities** tab and look at the options provided.
 
 ![screenshot with the default capabilities of a direct3d app.](images/simple-dx-game-setup-capabilities.png)
 
@@ -156,7 +152,7 @@ There are a few files we haven't looked at yet. These files provide additional t
 
 At this point, you've learnt how to create a UWP DirectX game project using the **DirectX 11 App (Universal Windows)** template and have been introduced to a few components and files provided by this project.
 
-The next section is [Defining the game's UWP framework](tutorial--building-the-games-metro-style-app-framework.md). We'll examine how this game uses and extends many of the concepts and components that the template provides.
+The next section is [Defining the game's UWP framework](tutorial--building-the-games-uwp-app-framework.md). We'll examine how this game uses and extends many of the concepts and components that the template provides.
 
  
 

@@ -1,17 +1,12 @@
 ---
-author: mtoepke
 title: Walkthrough-- Direct3D 11 shadow volume depth buffers
 description: This walkthrough demonstrates how to render shadow volumes using depth maps, using Direct3D 11 on devices of all Direct3D feature levels.
 ms.assetid: d15e6501-1a1d-d99c-d1d8-ad79b849db90
-ms.author: mtoepke
 ms.date: 02/08/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, games, directx, shadow volumes, depth buffers, directx 11
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
-
 # Walkthrough: Implement shadow volumes using depth buffers in Direct3D 11
 
 
@@ -31,19 +26,19 @@ This walkthrough demonstrates how to render shadow volumes using depth maps, usi
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><p>[Create depth buffer device resources](create-depth-buffer-resource--view--and-sampler-state.md)</p></td>
+<td align="left"><p><a href="create-depth-buffer-resource--view--and-sampler-state.md">Create depth buffer device resources</a></p></td>
 <td align="left"><p>Learn how to create the Direct3D device resources necessary to support depth testing for shadow volumes.</p></td>
 </tr>
 <tr class="even">
-<td align="left"><p>[Render the shadow map to the depth buffer](render-the-shadow-map-to-the-depth-buffer.md)</p></td>
+<td align="left"><p><a href="render-the-shadow-map-to-the-depth-buffer.md">Render the shadow map to the depth buffer</a></p></td>
 <td align="left"><p>Render from the point of view of the light to create a two-dimensional depth map representing the shadow volume.</p></td>
 </tr>
 <tr class="odd">
-<td align="left"><p>[Render the scene with depth testing](render-the-scene-with-depth-testing.md)</p></td>
+<td align="left"><p><a href="render-the-scene-with-depth-testing.md">Render the scene with depth testing</a></p></td>
 <td align="left"><p>Create a shadow effect by adding depth testing to your vertex (or geometry) shader and your pixel shader.</p></td>
 </tr>
 <tr class="even">
-<td align="left"><p>[Support shadow maps on a range of hardware](target-a-range-of-hardware.md)</p></td>
+<td align="left"><p><a href="target-a-range-of-hardware.md">Support shadow maps on a range of hardware</a></p></td>
 <td align="left"><p>Render higher-fidelity shadows on faster devices and faster shadows on less powerful devices.</p></td>
 </tr>
 </tbody>
@@ -74,13 +69,13 @@ You should [Prepare your dev environment for Universal Windows Platform (UWP) Di
 
 **Direct3D**
 
-* [Writing HLSL Shaders in Direct3D 9](https://msdn.microsoft.com/library/windows/desktop/bb944006)
+* [Writing HLSL Shaders in Direct3D 9](https://docs.microsoft.com/windows/desktop/direct3dhlsl/dx-graphics-hlsl-writing-shaders-9)
 * [Create a new DirectX 11 project for UWP](user-interface.md)
 
 **Shadow mapping technical articles**
 
-* [Common Techniques to Improve Shadow Depth Maps](https://msdn.microsoft.com/library/windows/desktop/ee416324)
-* [Cascaded Shadow Maps](https://msdn.microsoft.com/library/windows/desktop/ee416307)
+* [Common Techniques to Improve Shadow Depth Maps](https://docs.microsoft.com/windows/desktop/DxTechArts/common-techniques-to-improve-shadow-depth-maps)
+* [Cascaded Shadow Maps](https://docs.microsoft.com/windows/desktop/DxTechArts/cascaded-shadow-maps)
 
  
 

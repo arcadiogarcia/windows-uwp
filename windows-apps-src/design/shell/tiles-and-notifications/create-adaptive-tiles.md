@@ -1,38 +1,31 @@
 ---
-author: mijacobs
 Description: Adaptive tile templates are a new feature in Windows 10, allowing you to design your own tile notification content using a simple and flexible markup language that adapts to different screen densities.
 title: Create adaptive tiles
 ms.assetid: 1246B58E-D6E3-48C7-AD7F-475D113600F9
 label: Create adaptive tiles
 template: detail.hbs
-ms.author: mijacobs
 ms.date: 05/19/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
 # Create adaptive tiles
 
- 
-
-
 Adaptive tile templates are a new feature in Windows 10, allowing you to design your own tile notification content using a simple and flexible markup language that adapts to different screen densities. This article tells you how to create adaptive live tiles for your Universal Windows Platform (UWP) app. For the complete list of adaptive elements and attributes, see the [Adaptive tiles schema](../tiles-and-notifications/tile-schema.md).
 
-(If you'd like, you can still use the preset templates from the [Windows 8 tile template catalog](https://msdn.microsoft.com/library/windows/apps/hh761491) when designing notifications for Windows 10.)
+(If you'd like, you can still use the preset templates from the [Windows 8 tile template catalog](https://docs.microsoft.com/previous-versions/windows/apps/hh761491(v=win.10)) when designing notifications for Windows 10.)
 
 
 ## Getting started
 
 **Install Notifications library.** If you'd like to use C# instead of XML to generate notifications, install the NuGet package named [Microsoft.Toolkit.Uwp.Notifications](https://www.nuget.org/packages/Microsoft.Toolkit.Uwp.Notifications/) (search for "notifications uwp"). The C# samples provided in this article use version 1.0.0 of the NuGet package.
 
-**Install Notifications Visualizer.** This free UWP app helps you design adaptive live tiles by providing an instant visual preview of your tile as you edit it, similar to Visual Studio's XAML editor/design view. You can read [this blog post](http://blogs.msdn.com/b/tiles_and_toasts/archive/2015/09/22/introducing-notifications-visualizer-for-windows-10.aspx) for more information, and you can download Notifications Visualizer [here](https://www.microsoft.com/store/apps/notifications-visualizer/9nblggh5xsl1).
+**Install Notifications Visualizer.** This free UWP app helps you design adaptive live tiles by providing an instant visual preview of your tile as you edit it, similar to Visual Studio's XAML editor/design view. See [Notifications Visualizer](notifications-visualizer.md) for more information, or [download Notifications Visualizer from the Store](https://www.microsoft.com/store/apps/notifications-visualizer/9nblggh5xsl1).
 
 
 ## How to send a tile notification
 
-Please read our [Quickstart on sending local tile notifications](sending-a-local-tile-notification.md). The documentation on this page explains all the visual UI possibilities you have with adaptive tiles.
+Please read our [Quickstart on sending local tile notifications](sending-a-local-tile-notification.md). The documentation below explains all the visual UI possibilities you have with adaptive tiles.
 
 
 ## Usage guidance
@@ -794,11 +787,12 @@ private static AdaptiveSubgroup CreateSubgroup(string day, string image, string 
 
 The &lt;image&gt; element is used to display images on the tile notification. Images can be placed inline within the tile content (default), as a background image behind your content, or as a peek image that animates in from the top of the notification.
 
-**Note**   There are [restrictions on the file size and dimensions of images](https://msdn.microsoft.com/library/windows/apps/hh781198).
+> [!NOTE]
+> Images can be used from the app's package, the app's local storage, or from the web. As of the Fall Creators Update, web images can be up to 3 MB on normal connections and 1 MB on metered connections. On devices not yet running the Fall Creators Update, web images must be no larger than 200 KB.
 
  
 
-With no extra behaviors specified, images will uniformly shrink or expand to fill the available width. The sample below shows a tile using two columns and inline images. The inline images stretch to fill the width of the column.
+With no extra behaviors specified, images will uniformly shrink or expand to fill the available width. This example shows a tile using two columns and inline images. The inline images stretch to fill the width of the column.
 
 ```xml
 <binding template="TileMedium" displayName="Seattle" branding="name">
@@ -1391,12 +1385,12 @@ TileWide = new TileBinding()
 ```
 
 ## Related topics
-
-
 * [Tile content schema](../tiles-and-notifications/tile-schema.md)
-* [Quickstart: Send a local tile notification](sending-a-local-tile-notification.md)
-* [Notifications library on GitHub](https://github.com/Microsoft/UWPCommunityToolkit/tree/dev/Notifications)
-* [Special tile templates catalog](special-tile-templates-catalog.md)
+* [Send a local tile notification](sending-a-local-tile-notification.md)
+* [Special tile templates](special-tile-templates-catalog.md)
+* [UWP Community Toolkit - Notifications](https://github.com/windows-toolkit/WindowsCommunityToolkit/tree/master/Microsoft.Toolkit.Uwp.Notifications)
+* [Windows Notifications on GitHub](https://github.com/WindowsNotifications)
+
  
 
  

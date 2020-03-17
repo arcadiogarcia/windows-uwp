@@ -1,32 +1,21 @@
 ---
-author: mijacobs
 Description: Use fade animations to bring items into a view or to take items out of a view. The two common fade animations are fade-in and fade-out.
 title: Fade animations in UWP apps
 ms.assetid: 975E5EE3-EFBE-4159-8D10-3C94143DD07F
 label: Motion--fades
 template: detail.hbs
-ms.author: mijacobs
 ms.date: 05/19/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
-
 # Fade animations
 
 
 
 Use fade animations to bring items into a view or to take items out of a view. The two common fade animations are fade-in and fade-out.
 
-<div class="important-apis" >
-<b>Important APIs</b><br/>
-<ul>
-<li>[**FadeInThemeAnimation class**](https://msdn.microsoft.com/library/windows/apps/br210298)</li>
-<li>[**FadeOutThemeAnimation class**](https://msdn.microsoft.com/library/windows/apps/br210302)</li>
-</ul>
-</div>
+> **Important APIs**: [**FadeInThemeAnimation class**](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.Animation.FadeInThemeAnimation), [**FadeOutThemeAnimation class**](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.Animation.FadeOutThemeAnimation)
 
 
 ## Do's and don'ts
@@ -39,11 +28,11 @@ Use fade animations to bring items into a view or to take items out of a view. T
 -   Fade-out is a subtle way to remove an element.
 ## Related articles
 
-* [Animations overview](https://msdn.microsoft.com/library/windows/apps/mt187350)
-* [Animating fades](https://msdn.microsoft.com/library/windows/apps/xaml/jj649429)
-* [Quickstart: Animating your UI using library animations](https://msdn.microsoft.com/library/windows/apps/xaml/hh452703)
-* [**FadeInThemeAnimation class**](https://msdn.microsoft.com/library/windows/apps/br210298)
-* [**FadeOutThemeAnimation class**](https://msdn.microsoft.com/library/windows/apps/br210302)
+* [Animations overview](https://docs.microsoft.com/windows/uwp/graphics/animations-overview)
+* [Animating fades](https://docs.microsoft.com/previous-versions/windows/apps/jj649429(v=win.10))
+* [Quickstart: Animating your UI using library animations](https://docs.microsoft.com/previous-versions/windows/apps/hh452703(v=win.10))
+* [**FadeInThemeAnimation class**](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.Animation.FadeInThemeAnimation)
+* [**FadeOutThemeAnimation class**](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.Animation.FadeOutThemeAnimation)
 
  
 

@@ -2,22 +2,12 @@
 title: Create a Windows Hello login service
 description: This is Part 2 of a complete walkthrough on how to use Windows Hello as an alternative to traditional username and password authentication systems in Windows 10 UWP (Universal Windows platform) apps.
 ms.assetid: ECC9EF3D-E0A1-4BC4-94FA-3215E6CFF0E4
-author: awkoren
-ms.author: alkoren
 ms.date: 02/08/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
-keywords: windows 10, uwp
-localizationpriority: medium
+keywords: windows 10, uwp, security
+ms.localizationpriority: medium
 ---
-
 # Create a Windows Hello login service
-
-
-
-
-\[Some information relates to pre-released product which may be substantially modified before it's commercially released. Microsoft makes no warranties, express or implied, with respect to the information provided here.\]
 
 This is Part 2 of a complete walkthrough on how to use Windows Hello as an alternative to traditional username and password authentication systems in Windows 10 UWP (Universal Windows platform) apps. This article picks up where Part 1, [Windows Hello login app](microsoft-passport-login.md), left off and extends the functionality to demonstrate how you can integrate Windows Hello into your existing application.
 
@@ -55,7 +45,7 @@ In this exercise you will be starting with the Windows Hello application built i
     }
     ```
 
-    You may have noticed the commented out list of PassportDevices. This is a modification you will need to make to an existing user model in your current implementation. The list of PassportDevices will contain a deviceID, the public key made from Windows Hello, and a [**KeyCredentialAttestationResult**](https://msdn.microsoft.com/library/windows/apps/dn973034). For this hands on lab you will need to implement the keyAttestationResult as they are only provided by Windows Hello on devices that have a TPM (Trusted Platform Modules) chip. The **KeyCredentialAttestationResult** is a combination of multiple properties and would need to be split in order to save and load them with a database.
+    You may have noticed the commented out list of PassportDevices. This is a modification you will need to make to an existing user model in your current implementation. The list of PassportDevices will contain a deviceID, the public key made from Windows Hello, and a [**KeyCredentialAttestationResult**](https://docs.microsoft.com/uwp/api/Windows.Security.Credentials.KeyCredentialAttestationResult). For this hands on lab you will need to implement the keyAttestationResult as they are only provided by Windows Hello on devices that have a TPM (Trusted Platform Modules) chip. The **KeyCredentialAttestationResult** is a combination of multiple properties and would need to be split in order to save and load them with a database.
 
 -   Create a new class in the AuthService folder called "PassportDevice.cs". This is the model for the Windows Hello devices as discussed above. Change the class definition to be public and add the following properties.
 
@@ -362,10 +352,10 @@ In this exercise you will be starting with the Windows Hello application built i
     }
     ```
 
--   In the MockStore class add a method that will add Windows Hello related information to an existing UserAccount. This method will be called PassportUpdateDetails and will take parameters to identify the user, and the Windows Hello details. The KeyAttestationResult has been commented out when creating a PassportDevice, in a real world application you would require this.
+- In the MockStore class add a method that will add Windows Hello related information to an existing UserAccount. This method will be called PassportUpdateDetails and will take parameters to identify the user, and the Windows Hello details. The KeyAttestationResult has been commented out when creating a PassportDevice, in a real world application you would require this.
 
-   ```cs
-   using Windows.Security.Credentials;
+    ```cs
+    using Windows.Security.Credentials;
 
     public void PassportUpdateDetails(Guid userId, Guid deviceId, byte[] publicKey, 
         KeyCredentialAttestationResult keyAttestationResult)
@@ -379,7 +369,7 @@ In this exercise you will be starting with the Windows Hello application built i
                 {
                     DeviceId = deviceId,
                     PublicKey = publicKey,
-                    // KeyAttestationResult = keyAttestationResult,
+                    // KeyAttestationResult = keyAttestationResult
                 });
             }
         }
@@ -387,7 +377,7 @@ In this exercise you will be starting with the Windows Hello application built i
     }
     ```
 
--   The MockStore class is now complete, as this represents the database it should be considered private. In order to access the MockStore an AuthService class is needed to manipulate the database data. In the AuthService folder create a new class called "AuthService.cs". Change the class definition to public and add a singleton instance pattern to make sure only one instance is ever created.
+- The MockStore class is now complete, as this represents the database it should be considered private. In order to access the MockStore an AuthService class is needed to manipulate the database data. In the AuthService folder create a new class called "AuthService.cs". Change the class definition to public and add a singleton instance pattern to make sure only one instance is ever created.
 
     ```cs
     namespace PassportLogin.AuthService
@@ -541,7 +531,6 @@ In this exercise you will be starting with the Windows Hello application built i
 
 ## Exercise 2: Client Side Logic
 
-
 In this exercise you will be changing the client side views and helper classes from the first lab to use the AuthService class. In the real world the AuthService would be the authentication server and you would need to use Web API’s to send and receive data from the server. For this hands on lab client and server are all local to keep things simple. The objective is to learn how to use the Windows Hello APIs.
 
 -   In the MainPage.xaml.cs you can remove the AccountHelper.LoadAccountListAsync method call in the loaded method as the AuthService class creates an instance of the MockStore which loads the accounts list. The loaded method should now look like below. Note the async method definition is removed as nothing is being awaiting.
@@ -666,7 +655,7 @@ In this exercise you will be changing the client side views and helper classes f
             //If it does here you would Request a challenge from the Server. The client would sign this challenge and the server
             //would check the signed challenge. If it is correct it would allow the user access to the backend.
             //You would likely make a new method called RequestSignAsync to handle all this
-            //e.g. RequestSignAsync(openKeyResult);
+            //for example, RequestSignAsync(openKeyResult);
             //Refer to the second Windows Hello sample for information on how to do this.
 
             //For this sample there is not concept of a server implemented so just return true.
@@ -778,8 +767,8 @@ In this exercise you will be changing the client side views and helper classes f
 
 -   In the Welcome.xaml.cs file you will need to change the private Account variable at the top of the class to be a private UserAccount variable. Then update the OnNavigatedTo method to use the AuthService and retrieve information for the current account. When you have the account information you can set the itemsource of the list to display the devices. You will need to add a reference to the AuthService namespace.
 
-   ```cs
-   using PassportLogin.AuthService;
+    ```cs
+    using PassportLogin.AuthService;
 
     namespace PassportLogin.Views
     {
@@ -845,8 +834,8 @@ In this exercise you will be changing the client side views and helper classes f
 
 -   Before you can finish implementing the Welcome page class, you need to create a method in MicrosoftPassportHelper.cs that will allow a device to be removed. Create a new method that will call PassportRemoveDevice in AuthService.
 
-   ```cs
-   public static void RemovePassportDevice(UserAccount account, Guid deviceId)
+    ```cs
+    public static void RemovePassportDevice(UserAccount account, Guid deviceId)
     {
         AuthService.AuthService.Instance.PassportRemoveDevice(account.UserId, deviceId);
     }
@@ -1144,7 +1133,7 @@ In this exercise you will be changing the client side views and helper classes f
             //If it does here you would Request a challenge from the Server. The client would sign this challenge and the server
             //would check the signed challenge. If it is correct it would allow the user access to the backend.
             //You would likely make a new method called RequestSignAsync to handle all this
-            //e.g. RequestSignAsync(openKeyResult);
+            //for example, RequestSignAsync(openKeyResult);
             //Refer to the second Windows Hello sample for information on how to do this.
 
             return await RequestSignAsync(account.UserId, openKeyResult);

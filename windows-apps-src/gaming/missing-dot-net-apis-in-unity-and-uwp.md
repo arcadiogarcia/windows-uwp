@@ -1,24 +1,19 @@
 ---
-author: eliotcowley
 title: Missing .NET APIs in Unity and UWP
 description: Learn about the missing .NET APIs when building UWP games in Unity, and workarounds for common issues.
 ms.assetid: 28A8B061-5AE8-4CDA-B4AB-2EF0151E57C1
-ms.author: elcowle
-ms.date: 10/13/2017
+ms.date: 02/21/2018
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, games, .net, unity
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
-
 # Missing .NET APIs in Unity and UWP
 
 When building a UWP game using .NET, you may find that some APIs that you might use in the Unity editor or for a standalone PC game are not present for UWP. That's because .NET for UWP apps includes a subset of the types provided in the full .NET Framework for each namespace.
 
 Additionally, some game engines use different flavors of .NET that aren't fully compatible with .NET for UWP, such as Unity's Mono. So when you're writing your game, everything might work fine in the editor, but when you go to build for UWP, you might get errors like this: **The type or namespace 'Formatters' does not exist in the namespace 'System.Runtime.Serialization' (are you missing an assembly reference?)**
 
-Fortunately, Unity provides some of these missing APIs as extension methods and replacement types, which are described in [Universal Windows Platform: Missing .NET Types on .NET Scripting Backend](https://docs.unity3d.com/Manual/windowsstore-missingtypes.html). However, if the functionality you need is not here, [.NET for Windows 8.x apps overview](https://msdn.microsoft.com/library/windows/apps/br230302) discusses ways you can convert your code to use WinRT or .NET for UWP APIs. (It discusses Windows 8, but is applicable to Windows 10 UWP apps as well.)
+Fortunately, Unity provides some of these missing APIs as extension methods and replacement types, which are described in [Universal Windows Platform: Missing .NET Types on .NET Scripting Backend](https://docs.unity3d.com/Manual/windowsstore-missingtypes.html). However, if the functionality you need is not here, [.NET for Windows 8.x apps overview](https://docs.microsoft.com/previous-versions/windows/apps/br230302(v=vs.140)) discusses ways you can convert your code to use WinRT or .NET for UWP APIs. (It discusses Windows 8, but is applicable to Windows 10 UWP apps as well.)
 
 ## .NET Standard
 
@@ -112,8 +107,37 @@ private void UsingThreads()
 }
 ```
 
+### Security
+
+Some of the **System.Security.*** namespaces, such as [System.Security.Cryptography.X509Certificates](https://docs.microsoft.com/dotnet/api/system.security.cryptography.x509certificates?view=netstandard-2.0), are not available when you build a Unity game for UWP. In these cases, use the **Windows.Security.*** APIs, which cover much of the same functionality.
+
+The following example simply gets the certificates from a certificate store with the given name:
+
+```cs
+private async void GetCertificatesAsync(string certStoreName)
+    {
+#if NETFX_CORE
+        IReadOnlyList<Certificate> certs = await CertificateStores.FindAllAsync();
+        IEnumerable<Certificate> myCerts = 
+            certs.Where((certificate) => certificate.StoreName == certStoreName);
+#else
+        X509Store store = new X509Store(certStoreName, StoreLocation.CurrentUser);
+        store.Open(OpenFlags.OpenExistingOnly);
+        X509Certificate2Collection certs = store.Certificates;
+#endif
+    }
+```
+
+See [Security](https://docs.microsoft.com/windows/uwp/security/) for more information about using the WinRT security APIs.
+
+### Networking
+
+Some of the **System&period;Net.*** namespaces, such as [System.Net.Mail](https://docs.microsoft.com/dotnet/api/system.net.mail?view=netstandard-2.0), are also not available when building a Unity game for UWP. For most of these APIs, use the corresponding **Windows.Networking.*** and **Windows.Web.*** WinRT APIs to get similar functionality. See [Networking and web services](https://docs.microsoft.com/windows/uwp/networking/) for more information.
+
+In the case of **System.Net.Mail**, use the [Windows.ApplicationModel.Email](https://docs.microsoft.com/uwp/api/windows.applicationmodel.email) namespace. See [Send email](https://docs.microsoft.com/windows/uwp/contacts-and-calendar/sending-email) for more information.
+
 ## See also
 
 * [Universal Windows Platform: Missing .NET Types on .NET Scripting Backend](https://docs.unity3d.com/Manual/windowsstore-missingtypes.html)
-* [.NET for UWP apps overview](https://msdn.microsoft.com/library/windows/apps/br230302)
+* [.NET for UWP apps overview](https://docs.microsoft.com/previous-versions/windows/apps/br230302(v=vs.140))
 * [Unity UWP porting guides](https://unity3d.com/partners/microsoft/porting-guides)

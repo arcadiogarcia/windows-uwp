@@ -1,24 +1,19 @@
 ---
-author: GrantMeStrength
 ms.assetid: 03A74239-D4B6-4E41-B2FA-6C04F225B844
 title: Learn how to create a "Hello, world" app (XAML)
 description: Use Extensible Application Markup Language (XAML) with C# to create a simple Hello, world app that targets the Universal Windows Platform (UWP) on Windows 10.
-ms.author: jken
 ms.date: 03/06/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
-keywords: windows 10, uwp, get started, xaml
-localizationpriority: high
+keywords: windows 10, uwp, first app, hello world
+ms.localizationpriority: medium
 ---
-
 # Create a "Hello, world" app (XAML)
 
 This tutorial teaches you how to use XAML and C# to create a simple "Hello, world" app for the Universal Windows Platform (UWP) on Windows 10. With a single project in Microsoft Visual Studio, you can build an app that runs on any Windows 10 device.
 
 Here you'll learn how to:
 
--   Create a new **Visual Studio 2017** project that targets **Windows 10** and the **UWP**.
+-   Create a new **Visual Studio** project that targets **Windows 10** and the **UWP**.
 -   Write XAML to change the UI on your start page.
 -   Run the project on the local desktop in Visual Studio.
 -   Use a SpeechSynthesizer to make the app talk when you press a button.
@@ -26,8 +21,8 @@ Here you'll learn how to:
 
 ## Before you start...
 
--   [What's a Universal Windows app](whats-a-uwp.md)?
--   To complete this tutorial, you need Windows 10 and Visual Studio 2017. [Get set up](get-set-up.md).
+-   [What's a Universal Windows app?](universal-application-platform-guide.md)
+-   [Download Visual Studio 2017 (and Windows 10)](https://developer.microsoft.com/windows/downloads). If you need a hand, learn how to [get set up](get-set-up.md).
 -   We also assume you're using the default window layout in Visual Studio. If you change the default layout, you can reset it in the **Window** menu by using the **Reset Window Layout** command.
 
 > [!NOTE]
@@ -35,19 +30,17 @@ Here you'll learn how to:
 
 ## Video summary
 
-<iframe src="https://channel9.msdn.com/Blogs/One-Dev-Minute/Writing-Your-First-Windows-10-App/player" width="640" height="360" allowFullScreen frameBorder="0"></iframe>
-
-
+> [!VIDEO https://channel9.msdn.com/Blogs/One-Dev-Minute/Writing-Your-First-Windows-10-App/player]
 
 ## Step 1: Create a new project in Visual Studio.
 
-1.  Launch Visual Studio 2017.
+1.  Launch Visual Studio.
 
-2.  From the **File** menu, select **New > Project...** to open the *New Project* dialog.
+2.  From the **File** menu, select **New > Project** to open the *New Project* dialog.
 
-3.  From the list of templates on the left, open **Installed > Templates > Visual C# > Windows**, and then choose **Universal** to see the list of UWP project templates.
+3.  From the list of templates on the left, choose **Installed > Visual C# > Windows Universal** to see the list of UWP project templates.
 
-    (If you don't see any Universal templates, you might be missing the components for creating UWP apps. You can repeat the installation process and add UWP support by clicking **Open Visual Studio installer** on the *New Project* dialog. See [Get set up](get-set-up.md)
+    (If you don't see any Universal templates, you might be missing the components for creating UWP apps. You can repeat the installation process and add UWP support by clicking **Open Visual Studio installer** on the *New Project* dialog. See [Get set up](get-set-up.md).)
 
     ![How to repeat the installation process](images/win10-cs-install.png)
 
@@ -75,29 +68,31 @@ Although the **Blank App (Universal Window)** is a minimal template, it still co
 
 To view and edit a file in your project, double-click the file in the **Solution Explorer**. Expand a XAML file just like a folder to see its associated code file. XAML files open in a split view that shows both the design surface and the XAML editor.
 > [!NOTE]
-> What is XAML? Extensible Application Markup Language (XAML) is the language used to define your app's user interface. It can be entered manually, or created using the Visual Studio design tools. A .xaml file has a .xaml.cs code-behind file which contains the logic. Together, the XAML and code-behind make a complete class. For more information, see [XAML overview](https://msdn.microsoft.com/library/windows/apps/Mt185595).
+> What is XAML? Extensible Application Markup Language (XAML) is the language used to define your app's user interface. It can be entered manually, or created using the Visual Studio design tools. A .xaml file has a .xaml.cs code-behind file which contains the logic. Together, the XAML and code-behind make a complete class. For more information, see [XAML overview](https://docs.microsoft.com/windows/uwp/xaml-platform/xaml-overview).
 
 *App.xaml and App.xaml.cs*
 
 -   App.xaml is where you declare resources that are used across the app.
 -   App.xaml.cs is the code-behind file for App.xaml. Like all code-behind pages, it contains a constructor that calls the `InitializeComponent` method. You don't write the `InitializeComponent` method. It's generated by Visual Studio, and its main purpose is to initialize the elements declared in the XAML file.
 -   App.xaml.cs is the entry point for your app.
--   App.xaml.cs also contains methods to handle activation and suspension of the app.
+-   App.xaml.cs also contains methods to handle [activation](../launch-resume/activate-an-app.md) and [suspension](../launch-resume/suspend-an-app.md) of the app.
 
 *MainPage.xaml*
 
 -   MainPage.xaml is where you define the UI for your app. You can add elements directly using XAML markup, or you can use the design tools provided by Visual Studio.
 -   MainPage.xaml.cs is the code-behind page for MainPage.xaml. It's where you add your app logic and event handlers.
--   Together these two files define a new class called `MainPage`, which inherits from [**Page**](https://msdn.microsoft.com/library/windows/apps/BR227503), in the `HelloWorld` namespace.
+-   Together these two files define a new class called `MainPage`, which inherits from [**Page**](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Page), in the `HelloWorld` namespace.
 
 *Package.appxmanifest*
 -   A manifest file that describes your app: its name, description, tile, start page, etc.
--   Includes a list of the files that your app contains.
+-   Includes a list of dependencies, resources and files that your app contains.
 
 *A set of logo images*
--   Assets/Square150x150Logo.scale-200.png represents your app in the start menu.
+-   Assets/Square150x150Logo.scale-200.png and Wide310x150Logo.scale-200.png represent your app (either Medium or Wide size) in the start menu.
+-   Assets/Square44x44Logo.png represents your app in the app list of the start menu, task bar and task manager.
 -   Assets/StoreLogo.png represents your app in the Microsoft Store.
 -   Assets/SplashScreen.scale-200.png is the splash screen that appears when your app starts.
+-   Assets/LockScreenLogo.scale-200.png can be used to represent the app on the lock screen, when the system is locked.
 
 ## Step 2: Adding a button
 
@@ -122,7 +117,7 @@ Let's add a button to our page. In this tutorial, you work with just a few of th
     If you look at the XAML code window, you'll see that the Button has been added there too:
 
  ```XAML
-<Button x:name="button" Content="Button" HorizontalAlignment="Left" Margin = "152,293,0,0" VerticalAlignment="Top"/>
+<Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin = "152,293,0,0" VerticalAlignment="Top"/>
  ```
 
 4.  Change the button's text.
@@ -130,7 +125,7 @@ Let's add a button to our page. In this tutorial, you work with just a few of th
     Click in the XAML code view, and change the Content from "Button" to "Hello, world!".
 
 ```XAML
-<Button x:name="button" Content="Hello, world!" HorizontalAlignment="Left" Margin = "152,293,0,0" VerticalAlignment="Top"/>
+<Button x:Name="button" Content="Hello, world!" HorizontalAlignment="Left" Margin = "152,293,0,0" VerticalAlignment="Top"/>
 ```
 
 Notice how the button displayed in the design canvas updates to display the new text.
@@ -199,8 +194,8 @@ An "event handler" sounds complicated, but it's just another name for the code t
 
 3.  Edit the event handler code in *MainPage.xaml.cs*, the code-behind page. This is where things get interesting. The default event handler looks like this:
 
-```C#
-private void Button_Click(object sender, RouteEventArgs e)
+```cs
+private void Button_Click(object sender, RoutedEventArgs e)
 {
 
 }
@@ -208,39 +203,37 @@ private void Button_Click(object sender, RouteEventArgs e)
 
   Let's change it, so it looks like this:
 
-```C#
+```cs
 private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MediaElement mediaElement = new MediaElement();
-            var synth = new Windows.Media.SpeechSynthesis.SpeechSynthesizer();
-            Windows.Media.SpeechSynthesis.SpeechSynthesisStream stream = await synth.SynthesizeTextToStreamAsync("Hello, World!");
-            mediaElement.SetSource(stream, stream.ContentType);
-            mediaElement.Play();
-        }
+{
+    MediaElement mediaElement = new MediaElement();
+    var synth = new Windows.Media.SpeechSynthesis.SpeechSynthesizer();
+    Windows.Media.SpeechSynthesis.SpeechSynthesisStream stream = await synth.SynthesizeTextToStreamAsync("Hello, World!");
+    mediaElement.SetSource(stream, stream.ContentType);
+    mediaElement.Play();
+}
 ```
 
-Make sure you include the **async** keyword as well, or you'll get an error when you try to run the app.
+Make sure the method signature now includes the **async** keyword, or you'll get an error when you try to run the app.
 
 ### What did we just do?
 
-This code uses some Windows APIs to create a speech synthesis object, and then gives it some text to say. (For more information on using SpeechSynthesis, see the [SpeechSynthesis namespace](https://msdn.microsoft.com/library/windows/apps/windows.media.speechsynthesis.aspx) docs.)
+This code uses some Windows APIs to create a speech synthesis object, and then gives it some text to say. (For more information on using SpeechSynthesis, see the [SpeechSynthesis namespace](https://docs.microsoft.com/uwp/api/windows.media.speechsynthesis) docs.)
 
 When you run the app and click on the button, your computer (or phone) will literally say "Hello, World!".
 
 
 ## Summary
 
-
 Congratulations, you've created your first app for Windows 10 and the UWP!
 
 To learn how to use XAML for laying out the controls your app will use, try the [grid tutorial](../design/layout/grid-tutorial.md), or jump straight to [next steps](learn-more.md)?
 
-
 ## See Also
 
 * [Your first app](your-first-app.md)
-* [Publishing your UWP app](https://developer.microsoft.com/store/publish-apps).
-* [How-to articles on developing UWP apps](https://developer.microsoft.com/windows/apps/develop)
+* [Publishing your UWP app](https://docs.microsoft.com/windows/uwp/publish/).
+* [How-to articles on developing UWP apps](https://docs.microsoft.com/windows/uwp/develop/)
 * [Code Samples for UWP developers](https://developer.microsoft.com/windows/samples)
-* [What's a Universal Windows app?](whats-a-uwp.md)
+* [What's a Universal Windows app?](universal-application-platform-guide.md)
 * [Sign up for Windows account](sign-up.md)

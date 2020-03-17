@@ -1,19 +1,14 @@
 ---
-author: Xansky
 Description: Describes the requirements for declaring your Universal Windows Platform (UWP) app as accessible in the Microsoft Store.
 ms.assetid: 59FA3B87-75A6-4B30-BA7C-A0E769D68050
 title: Accessibility in the Store
 label: Accessibility in the Store
 template: detail.hbs
-ms.author: mhopkins
 ms.date: 02/08/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
-
 # Accessibility in the Store  
 
 
@@ -39,11 +34,12 @@ You should declare your app as accessible if you built and tested it for accessi
     * Use keyboard shortcuts to reach primary app functionality.
     * Use Narrator touch gestures for Tab and arrow equivalency for devices with no keyboard.
 * Ensured that your app UI is visually accessible: has a minimum text contrast ratio of 4.5:1, does not rely on color alone to convey information, and so on.
-* Used accessibility testing tools such as [**Inspect**](https://msdn.microsoft.com/library/windows/desktop/Dd318521) and [**UIAVerify**](https://msdn.microsoft.com/library/windows/desktop/Hh920986) to verify your accessibility implementation, and resolved all priority 1 errors reported by such tools.
+* Used accessibility testing tools such as [**Inspect**](https://docs.microsoft.com/windows/desktop/WinAuto/inspect-objects) and [**UIAVerify**](https://docs.microsoft.com/windows/desktop/WinAuto/ui-automation-verify) to verify your accessibility implementation, and resolved all priority 1 errors reported by such tools.
 * Verified your app’s primary scenarios from end to end by using Narrator, Magnifier, On-Screen Keyboard, a high contrast theme, and adjusted dpi settings.
 
 See the [Accessibility checklist](accessibility-checklist.md) for a review of these procedures and links to resources that will help you accomplish them.
 
 <span id="related_topics"/>
+
 ## Related topics    
 * [Accessibility](accessibility.md) 

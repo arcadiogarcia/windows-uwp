@@ -1,14 +1,10 @@
 ---
-author: jwmsft
 title: Pointer-based animations
-description: 
-ms.author: jimwalk
+description: Learn how to use the position of a pointer to create dynamic "stick to the cursor" experiences.
 ms.date: 02/08/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, animation
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
 # Pointer-based animations
 

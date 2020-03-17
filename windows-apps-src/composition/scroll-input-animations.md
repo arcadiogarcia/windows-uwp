@@ -1,14 +1,10 @@
 ---
-author: jwmsft
 title: Enhance existing ScrollViewer experiences
-description: 
-ms.author: jimwalk
+description: Learn how to use a XAML ScrollViewer and ExpressionAnimations to create dynamic input-driven motion experiences.
 ms.date: 10/10/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, animation
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
 # Enhance existing ScrollViewer experiences
 
@@ -59,7 +55,7 @@ General Steps to getting started:
 
 ## Example
 
-Let's take a look at how the Parallax sample shown above is put together. For reference, all the source code for the app is found in the [Window UI Dev Labs repo on GitHub](https://github.com/Microsoft/WindowsUIDevLabs).
+Let's take a look at how the Parallax sample shown above is put together. For reference, all the source code for the app is found in the [Window UI Dev Labs repo on GitHub](https://github.com/microsoft/WindowsCompositionSamples).
 
 The first thing is to get a reference to the ScrollManipulationPropertySet.
 

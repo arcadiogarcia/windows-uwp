@@ -1,17 +1,12 @@
 ---
-author: mtoepke
 title: Port a simple OpenGL ES 2.0 renderer to Direct3D 11
 description: For the first porting exercise, we'll start with the basics-- bringing a simple renderer for a spinning, vertex-shaded cube from OpenGL ES 2.0 into Direct3D, such that it matches the DirectX 11 App (Universal Windows) template from Visual Studio 2015.
 ms.assetid: e7f6fa41-ab05-8a1e-a154-704834e72e6d
-ms.author: mtoepke
 ms.date: 02/08/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, games, opengl, direct3d 11, port
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
-
 # Port a simple OpenGL ES 2.0 renderer to Direct3D 11
 
 
@@ -26,7 +21,7 @@ For this porting exercise, we'll start with the basics: bringing a simple render
 
 This topic starts after you have created a new DirectX 11 project. To learn how to create a new DirectX 11 project, read [Create a new DirectX 11 project for Universal Windows Platform (UWP)](user-interface.md).
 
-The project created from either of these links has all the code for the [Direct3D](https://msdn.microsoft.com/library/windows/desktop/ff476345) infrastructure prepared, and you can immediately start into the process of porting your renderer from Open GL ES 2.0 to Direct3D 11.
+The project created from either of these links has all the code for the [Direct3D](https://docs.microsoft.com/windows/desktop/direct3d11/dx-graphics-overviews) infrastructure prepared, and you can immediately start into the process of porting your renderer from Open GL ES 2.0 to Direct3D 11.
 
 This topic walks two code paths that perform the same basic graphics task: display a rotating vertex-shaded cube in a window. In both cases, the code covers the following process:
 
@@ -88,7 +83,7 @@ This structure has one instance and contains all the necessary components for re
 
 ### Technologies
 
--   [Microsoft Visual C++](http://msdn.microsoft.com/library/vstudio/60k1461a.aspx)
+-   [Microsoft Visual C++](https://docs.microsoft.com/previous-versions/60k1461a(v=vs.140))
 -   OpenGL ES 2.0
 
 ### Prerequisites
@@ -111,19 +106,19 @@ This structure has one instance and contains all the necessary components for re
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><p>[Port the shader objects](port-the-shader-config.md)</p></td>
+<td align="left"><p><a href="port-the-shader-config.md">Port the shader objects</a></p></td>
 <td align="left"><p>When porting the simple renderer from OpenGL ES 2.0, the first step is to set up the equivalent vertex and fragment shader objects in Direct3D 11, and to make sure that the main program can communicate with the shader objects after they are compiled.</p></td>
 </tr>
 <tr class="even">
-<td align="left"><p>[Port the vertex buffers and data](port-the-vertex-buffers-and-data-config.md)</p></td>
+<td align="left"><p><a href="port-the-vertex-buffers-and-data-config.md">Port the vertex buffers and data</a></p></td>
 <td align="left"><p>In this step, you'll define the vertex buffers that will contain your meshes and the index buffers that allow the shaders to traverse the vertices in a specified order.</p></td>
 </tr>
 <tr class="odd">
-<td align="left"><p>[Port the GLSL](port-the-glsl.md)</p></td>
+<td align="left"><p><a href="port-the-glsl.md">Port the GLSL</a></p></td>
 <td align="left"><p>Once you've moved over the code that creates and configures your buffers and shader objects, it's time to port the code inside those shaders from OpenGL ES 2.0's GL Shader Language (GLSL) to Direct3D 11's High-level Shader Language (HLSL).</p></td>
 </tr>
 <tr class="even">
-<td align="left"><p>[Draw to the screen](draw-to-the-screen.md)</p></td>
+<td align="left"><p><a href="draw-to-the-screen.md">Draw to the screen</a></p></td>
 <td align="left"><p>Finally, we port the code that draws the spinning cube to the screen.</p></td>
 </tr>
 </tbody>

@@ -1,32 +1,25 @@
 ---
-author: msatranjr
-title: Brokered Windows Runtime Components for a side-loaded UWP app
+title: Brokered Windows Runtime components for a side-loaded UWP app
 description: This paper discusses an enterprise-targeted feature supported by Windows 10, which allows touch-friendly .NET apps to use the existing code responsible for key business-critical operations.
-ms.author: misatran
 ms.date: 02/08/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp
 ms.assetid: 81b3930c-6af9-406d-9d1e-8ee6a13ec38a
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
-
-#Brokered Windows Runtime Components for a side-loaded UWP app
+# Brokered Windows Runtime components for a side-loaded UWP app
 
 This article discusses an enterprise-targeted feature supported by
 Windows 10, which allows touch-friendly .NET apps to use the existing
 code responsible for key business-critical operations.
 
-##Introduction
+## Introduction
 
->**Note**  The sample code that accompanies this paper may be [downloaded from this
-location](http://go.microsoft.com/fwlink/p/?LinkID=393655), and
-Microsoft Visual Studio template to build Brokered Windows Runtime
-Component can be downloaded here: [Visual Studio 2015 template targeting Universal Windows Apps for Windows
-10](https://visualstudiogallery.msdn.microsoft.com/10be07b3-67ef-4e02-9243-01b78cd27935)
+>**Note**  The sample code that accompanies this paper may be downloaded for [Visual Studio 2015 & 2017](https://github.com/Microsoft/Brokered-WinRT-Components). The Microsoft Visual Studio template to build Brokered Windows Runtime
+Components can be downloaded here: [Visual Studio 2015 template targeting Universal Windows Apps for Windows
+10](https://marketplace.visualstudio.com/items?itemName=vs-publisher-713547.VS2015TemplateBrokeredComponents)
 
-Windows includes a new feature called *Brokered Windows Runtime
+Windows includes a new feature called *Brokered Windows Runtime
 Components for side-loaded applications*. We use the term IPC
 (inter-process communication) to describe the ability to run existing
 desktop software assets in one process (desktop component) while
@@ -56,9 +49,9 @@ component sides. While there are other languages and runtimes possible
 for the UWP app, the accompanying sample only illustrates C\#,
 and is restricted to the .NET runtime exclusively.
 
-##Application components
+## Application components
 
->**Note**  This feature is exclusively for the use of .NET. Both client app and the
+>**Note**  This feature is exclusively for the use of .NET. Both client app and the
 desktop component must be authored using .NET.
 
 **Application model**
@@ -91,11 +84,11 @@ implementation.
 The contract between the side-loaded application and the desktop
 component is described in terms of the UWP type system. This involves
 declaring one or more C\# classes that can represent a UWP. See MSDN
-topic [Creating Windows Runtime Components in C\# and Visual
-Basic](https://msdn.microsoft.com/library/br230301.aspx) for
+topic [Creating Windows Runtime components in C\# and Visual
+Basic](https://docs.microsoft.com/previous-versions/windows/apps/br230301(v=vs.140)) for
 specific requirement of creating Windows Runtime Class using C\#.
 
->**Note**  Enums are not supported in the Windows Runtime Components Contract
+>**Note**  Enums are not supported in the Windows Runtime components contract
 between desktop component and side-loaded application at this time.
 
 **Side-loaded application**
@@ -110,7 +103,7 @@ application itself. It is the normal best practice that the side-loaded
 application passes the WACK certification test that is included in the
 Project / Store menu in Visual Studio
 
->**Note** Side-loading can be turned on in Settings-&gt; Update & security -&gt;
+>**Note** Side-loading can be turned on in Settings-&gt; Update & security -&gt;
 For developers.
 
 One important point to note is that the App Broker mechanism shipped as
@@ -139,7 +132,7 @@ server but they will be running identical code. All implementation
 components used in a single application should be present in the same
 path.
 
-##Defining the contract
+## Defining the contract
 
 The first step in creating an application using this feature is to
 create the contract between the side-loaded application and the desktop
@@ -150,7 +143,7 @@ conversations, which is covered in a later section.
 
 The sequence to define the contract is introduced as following:
 
-**Step 1:** Create a new class library in Visual Studio. Make sure to create the project using Class Library template not Windows Runtime Component template
+**Step 1:** Create a new class library in Visual Studio. Make sure to create the project using the **Class Library** template, and not the **Windows Runtime Component** template.
 
 An implementation obviously follows, but this section is only covering
 the definition of the inter-process contract. The accompanying sample
@@ -188,14 +181,14 @@ side-loaded application. This class provides the functionality promised in the
 RuntimeClass. The RuntimeClass can be used to generate the reference
 winmd that will be included in the side-loaded application.
 
-**Step 2:** Edit the project file manually to change the output type of project to Windows Runtime Component
+**Step 2:** Edit the project file manually to change the output type of project to **Windows Runtime Component**.
 
 To do this in Visual Studio, right click on the newly created project
 and select “Unload Project”, then right click again and select “Edit
 EnterpriseServer.csproj” to open the project file, an XML file, for
 editing.
 
-In the opened file, search for the <OutputType> tag and change its
+In the opened file, search for the \<OutputType\> tag and change its
 value to “winmdobj”.
 
 **Step 3:** Create a build rule that creates a "reference" Windows metadata file (.winmd file). i.e. has no implementation.
@@ -208,37 +201,60 @@ Post-build event command line, in project **Properties** > **Build Events**.
 > **Note** the script is different based on the version of Windows you
 are targeting (Windows 10) and the version of Visual Studio in use.
 
+**Visual Studio 2015**
 ```cmd
-call "$(DevEnvDir)..\..\vc\vcvarsall.bat" x86 10.0.10240.0
+    call "$(DevEnvDir)..\..\vc\vcvarsall.bat" x86 10.0.14393.0
 
-md "$(TargetDir)"\impl
-md "$(TargetDir)"\reference
+    md "$(TargetDir)"\impl    md "$(TargetDir)"\reference
 
-erase "$(TargetDir)\impl\*.winmd"
-erase "$(TargetDir)\impl\*.pdb"
-erase "$(TargetDir)\reference\*.winmd"
+    erase "$(TargetDir)\impl\*.winmd"
+    erase "$(TargetDir)\impl\*.pdb"
+    rem erase "$(TargetDir)\reference\*.winmd"
 
-xcopy /y "$(TargetPath)" "$(TargetDir)impl"
-xcopy /y "$(TargetDir)*.pdb" "$(TargetDir)impl"
+    xcopy /y "$(TargetPath)" "$(TargetDir)impl"
+    xcopy /y "$(TargetDir)*.pdb" "$(TargetDir)impl"
 
-cd "$(TargetDir)impl"
+    winmdidl /nosystemdeclares /metadata_dir:C:\Windows\System32\Winmetadata "$(TargetPath)"
 
-winmdidl /nosystemdeclares /metadata_dir:"%WindowsSdkDir%UnionMetadata" "$(TargetName).winmd"
+    midl /metadata_dir "%WindowsSdkDir%UnionMetadata" /iid "$(SolutionDir)BrokeredProxyStub\$(TargetName)_i.c" /env win32 /x86 /h   "$(SolutionDir)BrokeredProxyStub\$(TargetName).h" /winmd "$(TargetName).winmd" /W1 /char signed /nologo /winrt /dlldata "$(SolutionDir)BrokeredProxyStub\dlldata.c" /proxy "$(SolutionDir)BrokeredProxyStub\$(TargetName)_p.c"  "$(TargetName).idl"
+    mdmerge -n 1 -i "$(ProjectDir)bin\$(ConfigurationName)" -o "$(TargetDir)reference" -metadata_dir "%WindowsSdkDir%UnionMetadata" -partial
 
-midl /metadata_dir "%WindowsSdkDir%UnionMetadata" /iid "$(SolutionDir)SampleProxy\$(TargetName)_i.c" /env win32 /h "$(SolutionDir)SampleProxy\$(TargetName).h" /winmd "$(TargetName).winmd" /W1 /char signed /nologo /winrt /dlldata "$(SolutionDir)SampleProxy\dlldata.c" /proxy "$(SolutionDir)SampleProxy\$(TargetName)_p.c"  "$(TargetName).idl"
+    rem erase "$(TargetPath)"
 
-mdmerge -n 1 -i "$(TargetDir)\impl" -o "$(TargetDir)reference" -metadata_dir "%WindowsSdkDir%UnionMetadata" -partial
 ```
 
-Once the reference **winmd** is created (in folder “reference” under the
+
+**Visual Studio 2017**
+```cmd
+    call "$(DevEnvDir)..\..\vc\auxiliary\build\vcvarsall.bat" x86 10.0.16299.0
+
+    md "$(TargetDir)"\impl
+    md "$(TargetDir)"\reference
+
+    erase "$(TargetDir)\impl\*.winmd"
+    erase "$(TargetDir)\impl\*.pdb"
+    rem erase "$(TargetDir)\reference\*.winmd"
+
+    xcopy /y "$(TargetPath)" "$(TargetDir)impl"
+    xcopy /y "$(TargetDir)*.pdb" "$(TargetDir)impl"
+
+    winmdidl /nosystemdeclares /metadata_dir:C:\Windows\System32\Winmetadata "$(TargetPath)"
+
+    midl /metadata_dir "%WindowsSdkDir%UnionMetadata" /iid "$(SolutionDir)BrokeredProxyStub\$(TargetName)_i.c" /env win32 /x86 /h "$(SolutionDir)BrokeredProxyStub\$(TargetName).h" /winmd "$(TargetName).winmd" /W1 /char signed /nologo /winrt /dlldata "$(SolutionDir)BrokeredProxyStub\dlldata.c" /proxy "$(SolutionDir)BrokeredProxyStub\$(TargetName)_p.c"  "$(TargetName).idl"
+    mdmerge -n 1 -i "$(ProjectDir)bin\$(ConfigurationName)" -o "$(TargetDir)reference" -metadata_dir "%WindowsSdkDir%UnionMetadata" -partial
+
+    rem erase "$(TargetPath)"
+```
+
+Once the reference **winmd** is created (in folder “reference” under the
 project’s Target folder), it is hand carried (copied) to each consuming
 side-loaded application project and referenced. This will be described
 further in the next section. The project structure embodied in the build
 rules above ensure that the implementation and the
-reference **winmd** are in clearly segregated directories in the build
+reference **winmd** are in clearly segregated directories in the build
 hierarchy to avoid confusion.
 
-##Side-loaded applications in detail
+## Side-loaded applications in detail
 As stated previously, the side-loaded application is built like any
 other UWP app, but there is one additional detail: declaring the
 availability of the RuntimeClass (es) in the side-loaded application's
@@ -262,7 +278,7 @@ targeting Windows 10. For example:
 The category is inProcessServer because there are several entries in the
 outOfProcessServer category that are not applicable to this application
 configuration. Note that the <Path> component must always contain
-clrhost.dll (however this is **not** enforced and specifying a different
+clrhost.dll (however this is **not** enforced and specifying a different
 value will fail in undefined ways).
 
 The <ActivatableClass> section is the same as a true in-process
@@ -281,27 +297,27 @@ must be made to the desktop component's reference winmd. The Visual
 Studio project system normally creates a two level directory structure
 with the same name. In the sample it is
 EnterpriseIPCApplication\\EnterpriseIPCApplication. The reference
-**winmd** is manually copied to this second level directory and then the
-Project References dialog is used (click the **Browse..** button) to
+**winmd** is manually copied to this second level directory and then the
+Project References dialog is used (click the **Browse..** button) to
 locate and reference this **winmd**. After this, the top level namespace
-of the desktop component (e.g. Fabrikam) should appear as a top level
+of the desktop component (for example, Fabrikam) should appear as a top level
 node in the References part of the project.
 
->**Note** It is very important to use the **reference winmd** in the side-loaded
-application. If you accidentally carry over the **implementation
-winmd** to the side-loaded app directory and reference it, you will
+>**Note** It is very important to use the **reference winmd** in the side-loaded
+application. If you accidentally carry over the **implementation
+winmd** to the side-loaded app directory and reference it, you will
 likely receive an error related to "cannot find IStringable". This is
-one sure sign that the wrong **winmd** has been referenced. The
+one sure sign that the wrong **winmd** has been referenced. The
 post-build rules in the IPC server app (detailed in the next section)
-carefully segregate these two **winmd** into separate directories.
+carefully segregate these two **winmd** into separate directories.
 
 Environment variables (especially %ProgramFiles%) can be used in <ActivatableClassAttribute Value="path"> .As noted earlier, the App Broker only supports 32-bit so %ProgramFiles% will resolve to
 C:\\Program Files (x86) if the application is run on a 64-bit OS.
 
-##Desktop IPC server detail
+## Desktop IPC server detail
 
 The previous two sections describe declaration of the class and the
-mechanics of transporting the reference **winmd** to the side-loaded
+mechanics of transporting the reference **winmd** to the side-loaded
 application project. The bulk of the remaining work in the desktop
 component involves implementation. Since the whole point of the desktop
 component is to be able to call desktop code (usually to re-utilize
@@ -318,7 +334,7 @@ Normally only other inter-project references are made. However, a
 desktop component project has a very special set of references. It
 starts life as a "Classic Desktop\\Class Library" project and therefore
 is a desktop project. So explicit references to the Windows Runtime API
-(via references to **winmd** files) must be made. Add proper references
+(via references to **winmd** files) must be made. Add proper references
 as shown below.
 
 ```XML
@@ -526,7 +542,7 @@ as shown below.
       <HintPath>$(MsBuildProgramFiles32)\Windows Kits\10\References\Windows.Web.Http.Diagnostics.HttpDiagnosticsContract\1.0.0.0\Windows.Web.Http.Diagnostics.HttpDiagnosticsContract.winmd</HintPath>
       <Private>False</Private>
     </Reference>
-
+</ItemGroup>
 ```
 
 The references above are a careful mix of eferences that are critical to
@@ -535,10 +551,10 @@ the proper operation of this hybrid server. The protocol is to open the
 add these references as necessary.
 
 Once the references are properly configured, the next task is to
-implement the server's functionality. See the MSDN topic [Best practices
-for interoperability with Windows Runtime Components (UWP apps
+implement the server's functionality. See the topic [Best practices
+for interoperability with Windows Runtime components (UWP apps
 using C\#/VB/C++ and
-XAML)](https://msdn.microsoft.com/library/windows/apps/hh750311.aspx).
+XAML)](https://docs.microsoft.com/previous-versions/windows/apps/hh750311(v=win.10)).
 The task is to create a Windows Runtime component dll that is able to
 call desktop code as part of its implementation. The accompanying sample
 includes the major patterns used in Windows Runtime:
@@ -553,16 +569,16 @@ includes the major patterns used in Windows Runtime:
 
 **Install**
 
-To install the app, copy the implementation **winmd** to the correct
+To install the app, copy the implementation **winmd** to the correct
 directory specified in the associated side-loaded application's
 manifest: <ActivatableClassAttribute>'s Value="path". Also copy
 any associated support files and the proxy/stub dll (this latter detail
-is covered below). Failing to copy the implementation **winmd** to the
+is covered below). Failing to copy the implementation **winmd** to the
 server directory location will cause all of the side-loaded
 application's calls to new on the RuntimeClass will throw a "class not
 registered" error. Failure to install the proxy/stub (or failure to
 register) will cause all calls to fail with no return values. This
-latter error is frequently **not** associated with visible exceptions.
+latter error is frequently **not** associated with visible exceptions.
 If exceptions are observed due to this configuration error, they may
 refer to "invalid cast".
 
@@ -619,7 +635,7 @@ return Task<int>.Run( () =>
 
 >**Note** It is common to await some other potentially long running
 operations while writing the implementation. If so,
-the **Task.Run** code needs to be declared:
+the **Task.Run** code needs to be declared:
 
 ```csharp
 return Task<int>.Run(async () =>
@@ -645,7 +661,7 @@ application process can usually be directly retrieved from the UI
 thread. C\# objects are naturally agile between background threads and
 UI threads so are especially useful for this kind of calling pattern.
 
-##Creating and deploying the Windows Runtime proxy
+## Creating and deploying the Windows Runtime proxy
 
 Since the IPC approach involves marshaling Windows Runtime interfaces
 between two processes, a globally registered Windows Runtime proxy and
@@ -656,7 +672,7 @@ stub must be used.
 The process for creating and registering proxies and stubs for use
 inside a regular UWP app package are described in the
 topic [Raising Events in Windows Runtime
-Components](https://msdn.microsoft.com/library/windows/apps/dn169426.aspx).
+Components](https://docs.microsoft.com/previous-versions/windows/apps/dn169426(v=vs.140)).
 The steps described in this article are more complicated than the
 process described below because it involves registering the proxy/stub
 inside the application package (as opposed to registering it globally).
@@ -668,23 +684,23 @@ inside the application package (as opposed to registering it globally).
 option.**
 
 For the steps below, we assume the server component is
-called **MyWinRTComponent**.
+called **MyWinRTComponent**.
 
 **Step 3:** Delete all the CPP/H files from the project.
 
-**Step 4:** The previous section "Defining the Contract" contains a Post-Build command that runs **winmdidl.exe**, **midl.exe**, **mdmerge.exe**, and so on. One of the outputs from the midl step of this post-build command generates four important outputs:
+**Step 4:** The previous section "Defining the Contract" contains a Post-Build command that runs **winmdidl.exe**, **midl.exe**, **mdmerge.exe**, and so on. One of the outputs from the midl step of this post-build command generates four important outputs:
 
 a) Dlldata.c
 
-b) A header file (e.g. MyWinRTComponent.h)
+b) A header file (for example, MyWinRTComponent.h)
 
-c) A \*\_i.c file (e.g. MyWinRTComponent\_i.c)
+c) A \*\_i.c file (for example, MyWinRTComponent\_i.c)
 
-d) A \*\_p.c file (e.g. MyWinRTComponent\_p.c)
+d) A \*\_p.c file (for example, MyWinRTComponent\_p.c)
 
 **Step 5:** Add these four generated files to the "MyWinRTProxy" project.
 
-**Step 6:** Add a def file to "MyWinRTProxy" project **(Project > Add New Item > Code > Module-Definition File**) and update the contents to be:
+**Step 6:** Add a def file to "MyWinRTProxy" project **(Project > Add New Item > Code > Module-Definition File**) and update the contents to be:
 
 LIBRARY MyWinRTComponent.Proxies.dll
 
@@ -726,17 +742,17 @@ have your install process call DllRegisterServer on the proxy dll. Note
 that since the feature only supports servers built for x86 (i.e. no
 64-bit support), the simplest configuration is to use a 32-bit server, a
 32-bit proxy, and a 32-bit side-loaded application. The proxy normally
-sits alongside the implementation **winmd** for the desktop component.
+sits alongside the implementation **winmd** for the desktop component.
 
 One additional configuration step must be performed. In order for the
 side-loaded process to load and execute the proxy, the directory must be
 marked "read / execute" for ALL_APPLICATION_PACKAGES. This is done via
-the **icacls.exe** command line tool. This command should execute in the
-directory where the implementation **winmd** and proxy/stub dll resides:
+the **icacls.exe** command line tool. This command should execute in the
+directory where the implementation **winmd** and proxy/stub dll resides:
 
 *icacls . /T /grant \*S-1-15-2-1:RX*
 
-##Patterns and performance
+## Patterns and performance
 
 It is very important that performance of the cross-process transport be
 carefully monitored. A cross-process call is at least twice as expensive
@@ -757,14 +773,14 @@ Here is a non-exhaustive list of things to consider:
 -   Bulk transfer of results reduces cross-process chattiness. This is
     normally performed by using the Windows Runtime Array construct.
 
--   Returning *List<T>* where *T* is an object from an async
+-   Returning *List<T>* where *T* is an object from an async
     operation or property fetch, will cause a lot of
     cross-process chattiness. For example, assume you return
-    a*List&lt;People&gt;* objects. Each iteration pass will be a
-    cross-process call. Each *People* object returned is represented by
+    a*List&lt;People&gt;* objects. Each iteration pass will be a
+    cross-process call. Each *People* object returned is represented by
     a proxy and each call to a method or property on that individual
     object will result in a cross-process call. So an
-    "innocent" *List&lt;People&gt;* object where *Count* is large will
+    "innocent" *List&lt;People&gt;* object where *Count* is large will
     cause a large number of slow calls. Better performance results from
     bulk transfer of structs of the content in an array. For example:
 
@@ -778,14 +794,14 @@ struct PersonStruct
 }
 ```
 
-Then return* PersonStruct\[\]* instead of *List&lt;PersonObject&gt;*.
+Then return *PersonStruct\[\]* instead of *List&lt;PersonObject&gt;*.
 This gets all the data across in one cross-process "hop"
 
 As with all performance considerations, measurement and testing is
 critical. Ideally telemetry should be inserted into the various
 operations to determine how long they take. It is important to measure
 across a range: for example, how long does it actually take to consume
-all the *People* objects for a particular query in the side-loaded
+all the *People* objects for a particular query in the side-loaded
 application?
 
 Another technique is variable load testing. This can be done by putting
@@ -798,7 +814,7 @@ randomization to put into that artificial load will vary by application
 design and the anticipated environment in which the application will
 run.
 
-##Development process
+## Development process
 
 When you make changes to the server, it is necessary to make sure any
 previously running instances are no longer running. COM will eventually
@@ -808,7 +824,7 @@ instance is a normal step during development. This requires that the
 developer keep track of which dllhost instance is hosting the server.
 
 The server process can be found and killed using Task Manager or other
-third party apps. The command line tool **TaskList.exe **is also
+third party apps. The command line tool **TaskList.exe** is also
 included and has flexible syntax, for example:
 
   
@@ -818,24 +834,24 @@ included and has flexible syntax, for example:
  | tasklist /FI "IMAGENAME eq dllhost.exe" /M | Lists info on all the dllhost.exe instances. The /M switch lists the modules that they have loaded. |
  | tasklist /FI "PID eq 12564" /M | You can use this option to query the dllhost.exe if you know its PID. |
 
-The module list for a broker server should list *clrhost.dll* in its
+The module list for a broker server should list *clrhost.dll* in its
 list of loaded modules.
 
-##Resources
+## Resources
 
--   [Brokered WinRT Component Project Templates for Windows 10 and VS 2015](https://visualstudiogallery.msdn.microsoft.com/10be07b3-67ef-4e02-9243-01b78cd27935)
+-   [Brokered WinRT Component Project Templates for Windows 10 and VS 2015](https://marketplace.visualstudio.com/items?itemName=vs-publisher-713547.VS2015TemplateBrokeredComponents)
 
 -   [NorthwindRT Brokered WinRT Component
-    Sample](http://go.microsoft.com/fwlink/p/?LinkID=397349)
+    Sample](https://code.msdn.microsoft.com/Northwind-Brokered-WinRTC-5143a67c)
 
 -   [Delivering reliable and trustworthy Microsoft Store
-    apps](http://go.microsoft.com/fwlink/p/?LinkID=393644)
+    apps](https://blogs.msdn.com/b/b8/archive/2012/05/17/delivering-reliable-and-trustworthy-metro-style-apps.aspx)
 
 -   [App contracts and extensions (Windows
-    Store apps)](https://msdn.microsoft.com/library/windows/apps/hh464906.aspx)
+    Store apps)](https://docs.microsoft.com/previous-versions/windows/apps/hh464906(v=win.10))
 
--   [How to sideload apps on Windows 10](https://msdn.microsoft.com/windows/uwp/get-started/enable-your-device-for-development#GroupPolicy)
+-   [How to sideload apps on Windows 10](https://docs.microsoft.com/windows/uwp/get-started/enable-your-device-for-development)
 
 -   [Deploying UWP apps to
-    businesses](http://go.microsoft.com/fwlink/p/?LinkID=264770)
+    businesses](https://blogs.msdn.com/b/windowsstore/archive/2012/04/25/deploying-metro-style-apps-to-businesses.aspx)
 

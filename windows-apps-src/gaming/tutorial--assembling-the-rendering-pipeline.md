@@ -1,17 +1,12 @@
 ---
-author: joannaleecy
 title: Intro to rendering
 description: Learn how to assemble the rendering pipeline to display graphics. Intro to rendering.
 ms.assetid: 1da3670b-2067-576f-da50-5eba2f88b3e6
-ms.author: joanlee
 ms.date: 10/24/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, games, rendering
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
-
 # Rendering framework I: Intro to rendering
 
 We've covered how to structure a Universal Windows Platform (UWP) game and how to define a state machine to handle the flow of the game in the earlier topics. Now, it's time to learn how to assemble the rendering framework. Let's look at how the sample game renders the game scene using Direct3D 11 (commonly known as DirectX 11).
@@ -48,7 +43,7 @@ In this part of the tutorial, we'll focus on rendering 3D objects in the game.
 
 ## Establish a connection to the graphics interface
 
-To access to the hardware for rendering, see the UWP framework article under [__App::Initialize__](tutorial--building-the-games-metro-style-app-framework.md#appinitialize-method).
+To access to the hardware for rendering, see the UWP framework article under [__App::Initialize__](tutorial--building-the-games-uwp-app-framework.md#appinitialize-method).
 
 The __make\_shared function__, as shown [below](#appinitialize-method), is used to create a __shared\_ptr__ to [__DX::DeviceResources__](#dxdeviceresources), which also provides access to the device. 
 
@@ -71,7 +66,7 @@ void App::Initialize(
 
 ## Display the graphics by rendering the frame
 
-The game scene needs to render when the game is launched. The instructions for rendering start in the  [__GameMain::Run__](#gameamainrun-method) method, as shown below.
+The game scene needs to render when the game is launched. The instructions for rendering start in the  [__GameMain::Run__](#gamemainrun-method) method, as shown below.
 
 The simple flow is:
 1. __Update__
@@ -130,7 +125,7 @@ See the [Game flow management](tutorial-game-flow-management.md) article for mor
 
 Rendering is implemented by calling the [__GameRenderer::Render__](#gamerendererrender-method) method in __GameMain::Run__.
 
-If [stereo rendering](#stereo-rendering) is enabled, there are two rendering passes: one for the right eye and one for the left eye. In each rendering pass, we bind the render target and the [depth-stencil view](#depth-stencil-view) to the device. We also clear the depth-stencil view afterward.
+If [stereo rendering](#stereo-rendering) is enabled, there are two rendering passes: one for the right eye and one for the left eye. In each rendering pass, we bind the render target and the depth-stencil view to the device. We also clear the depth-stencil view afterward.
 
 > [!Note]
 > Stereo rendering can be achieved using other methods such as single pass stereo using vertex instancing or geometry shaders. The two rendering pass method is a slower, but more convenient way to achieve stereo rendering.
@@ -146,7 +141,7 @@ In this game sample, the renderer is designed to use a standard vertex layout ac
 
 Set the Direct3D context to use an input vertex layout. Input-layout objects describe how vertex buffer data is streamed into the [rendering pipeline](#rendering-pipeline). 
 
-Next, we set the Direct3D context to use the [constant buffers](#constant-buffers) defined earlier, that are used by the [vertex shader](#vertex-shaders-and-pixel-shaders) pipeline stage and the [pixel shader](#vertex-shaders-and-pixel-shaders) pipeline stage. 
+Next, we set the Direct3D context to use the constant buffers defined earlier, that are used by the [vertex shader](#vertex-shaders-and-pixel-shaders) pipeline stage and the [pixel shader](#vertex-shaders-and-pixel-shaders) pipeline stage. 
 
 > [!Note]
 > See [Rendering framework II: Game rendering](tutorial-game-rendering.md) for more information about definition of the constant buffers.
@@ -338,11 +333,11 @@ When rendering the scene, you loop through all the objects that need to be rende
 * The  __m\_constantBufferChangesEveryPrim__ contains parameters for each object.  It includes the object to world transformation matrix as well as material properties like color and specular exponent for lighting calculations.
 * Set Direct3D context to use the input vertex layout for the mesh object data to be streamed into the input-assembler (IA) stage of the [rendering pipeline](#rendering-pipeline)
 * Set Direct3D context to use an [index buffer](#index-buffer) in the IA stage. Provide the primitive info: type, data order.
-* Submit a draw call to draw the indexed, non-instanced primitive. The __GameObject::Render__ method updates the primitive [constant buffer](#constant-buffer-or-shader-constant-buffer) with the data specific to a given primitive. This results in a __DrawIndexed__ call on the context to draw the geometry of that each primitive. Specifically, this draw call queues commands and data to the graphics processing unit (GPU), as parameterized by the constant buffer data. Each draw call executes the [vertex shader](#vertex-shaders-and-pixel-shaders) one time per vertex, and then the [pixel shader](#vertex-shaders-and-pixel-shaders) one time for every pixel of each triangle in the primitive. The textures are part of the state that the pixel shader uses to do the rendering.
+* Submit a draw call to draw the indexed, non-instanced primitive. The __GameObject::Render__ method updates the primitive [constant buffer](#constant-buffer-or-shader-constant-buffer) with the data specific to a given primitive. This results in a __DrawIndexed__ call on the context to draw the geometry of that each primitive. Specifically, this draw call queues commands and data to the graphics processing unit (GPU), as parameterized by the constant buffer data. Each draw call executes the vertex shader one time per vertex, and then the [pixel shader](#vertex-shaders-and-pixel-shaders) one time for every pixel of each triangle in the primitive. The textures are part of the state that the pixel shader uses to do the rendering.
 
 Reasons for multiple constant buffers:
     * The game uses multiple constant buffers but only needs to update these buffers one time per primitive. As mentioned earlier, constant buffers are like inputs to the shaders that run for each primitive. Some data is static (__m\_constantBufferNeverChanges__); some data is constant over the frame (__m\_constantBufferChangesEveryFrame__), like the position of the camera; and some data is specific to the primitive, like its color and textures (__m\_constantBufferChangesEveryPrim__)
-    * The game [renderer](#renderer) separates these inputs into different constant buffers to optimize the memory bandwidth that the CPU and GPU use. This approach also helps to minimize the amount of data the GPU needs to keep track of. The GPU has a big queue of commands, and each time the game calls __Draw__, that command is queued along with the data associated with it. When the game updates the primitive constant buffer and issues the next __Draw__ command, the graphics driver adds this next command and the associated data to the queue. If the game draws 100 primitives, it could potentially have 100 copies of the constant buffer data in the queue. To minimize the amount of data the game is sending to the GPU, the game uses a separate primitive constant buffer that only contains the updates for each primitive.
+    * The game renderer separates these inputs into different constant buffers to optimize the memory bandwidth that the CPU and GPU use. This approach also helps to minimize the amount of data the GPU needs to keep track of. The GPU has a big queue of commands, and each time the game calls __Draw__, that command is queued along with the data associated with it. When the game updates the primitive constant buffer and issues the next __Draw__ command, the graphics driver adds this next command and the associated data to the queue. If the game draws 100 primitives, it could potentially have 100 copies of the constant buffer data in the queue. To minimize the amount of data the game is sending to the GPU, the game uses a separate primitive constant buffer that only contains the updates for each primitive.
 
 #### GameObject::Render method
 
@@ -490,17 +485,17 @@ Scene and object info are used by the rendering framework to recreate the scene 
 The rendering pipeline is the process in which 3D scene info is translated to an image displayed on screen. In Direct3D 11, this pipeline is programmable. You can adapt the stages to support your rendering needs. Stages that feature common shader cores are programmable by using the HLSL programming language. It is also known as the graphics rendering pipeline or simply pipeline.
 
 To help you create this pipeline, you need to be familiar with:
-* [HLSL](#HLSL). We recommend the use of HLSL Shader Model 5.1 and above for UWP DirectX games.
-* [Shaders](#Shaders)
-* [Vertex shaders and pixel shaders](#vertext-shaders-pixel-shaders)
+* [HLSL](#hlsl). We recommend the use of HLSL Shader Model 5.1 and above for UWP DirectX games.
+* [Shaders](#shaders)
+* [Vertex shaders and pixel shaders](#vertex-shaders-and-pixel-shaders)
 * [Shader stages](#shader-stages)
 * [Various shader file formats](#various-shader-file-formats)
 
-For more information, see [Understand the Direct3D 11 rendering pipeline](https://msdn.microsoft.com/library/windows/desktop/dn643746.aspx) and [Graphics pipeline](https://msdn.microsoft.com/library/windows/desktop/ff476882.aspx).
+For more information, see [Understand the Direct3D 11 rendering pipeline](https://docs.microsoft.com/windows/desktop/direct3dgetstarted/understand-the-directx-11-2-graphics-pipeline) and [Graphics pipeline](https://docs.microsoft.com/windows/desktop/direct3d11/overviews-direct3d-11-graphics-pipeline).
 
 #### HLSL
 
-HLSL is the High Level Shading Language for DirectX. Using HLSL, you can create C like programmable shaders for the Direct3D pipeline. For more information, see [HLSL](https://msdn.microsoft.com/library/windows/desktop/bb509561.aspx).
+HLSL is the High Level Shading Language for DirectX. Using HLSL, you can create C like programmable shaders for the Direct3D pipeline. For more information, see [HLSL](https://docs.microsoft.com/windows/desktop/direct3dhlsl/dx-graphics-hlsl).
 
 #### Shaders
 
@@ -516,7 +511,7 @@ Vertex shaders processes vertices, typically performing operations such as trans
 
 #### Shader stages
 
-A sequence of these various shaders defined to process this stream of primitives is known as shader stages in a rendering pipeline. The actual stages depend on the version of Direct3D, but usually include the vertex, geometry, and pixel stages. There are also other stages, such as the hull and domain shaders for tessellation, and the compute shader. All these stages are completely programmable using the [HLSL])(#hlsl). For more information, see [Graphics pipeline](https://msdn.microsoft.com/library/windows/desktop/ff476882.aspx).
+A sequence of these various shaders defined to process this stream of primitives is known as shader stages in a rendering pipeline. The actual stages depend on the version of Direct3D, but usually include the vertex, geometry, and pixel stages. There are also other stages, such as the hull and domain shaders for tessellation, and the compute shader. All these stages are completely programmable using the [HLSL])(#hlsl). For more information, see [Graphics pipeline](https://docs.microsoft.com/windows/desktop/direct3d11/overviews-direct3d-11-graphics-pipeline).
 
 #### Various shader file formats
 
@@ -545,7 +540,7 @@ The term subresource refers to a subset of a resource. Direct3D can reference an
 
 #### Depth-stencil
 
-A depth-stencil resource contains the format and buffer to hold depth and stencil information. It is created using a texture resource. For more information on how to create a depth-stencil resource, see [Configuring Depth-Stencil Functionality](https://msdn.microsoft.com/library/windows/desktop/bb205074.aspx). We access the depth-stencil resource through the depth-stencil view implemented using the [ID3D11DepthStencilView](https://msdn.microsoft.com/library/windows/desktop/ff476377.aspx) interface.
+A depth-stencil resource contains the format and buffer to hold depth and stencil information. It is created using a texture resource. For more information on how to create a depth-stencil resource, see [Configuring Depth-Stencil Functionality](https://docs.microsoft.com/windows/desktop/direct3d11/d3d10-graphics-programming-guide-depth-stencil). We access the depth-stencil resource through the depth-stencil view implemented using the [ID3D11DepthStencilView](https://docs.microsoft.com/windows/desktop/api/d3d11/nn-d3d11-id3d11depthstencilview) interface.
 
 Depth info tells us which areas of polygons are rendered rather than hidden from view. Stencil info tells us which pixels are masked. It can be used to produce special effects since it determines whether a pixel is drawn or not; sets the bit to a 1 or 0. 
 
@@ -553,9 +548,9 @@ For more information, see: [Depth-stencil view](../graphics-concepts/depth-stenc
 
 #### Render target
 
-A render target is a resource that we can write to at the end of a render pass. It is commonly created using the [ID3D11Device::CreateRenderTargetView](https://msdn.microsoft.com/library/windows/desktop/ff476517.aspx) method using the swap chain back buffer (which is also a resource) as the input parameter. 
+A render target is a resource that we can write to at the end of a render pass. It is commonly created using the [ID3D11Device::CreateRenderTargetView](https://docs.microsoft.com/windows/desktop/api/d3d11/nf-d3d11-id3d11device-createrendertargetview) method using the swap chain back buffer (which is also a resource) as the input parameter. 
 
-Each render target should also have a corresponding depth-stencil view because when we use [OMSetRenderTargets](https://msdn.microsoft.com/library/windows/desktop/ff476464.aspx) to set the render target before using it, it requires also a depth-stencil view. We access the render target resource through the render target view implemented using the [ID3D11RenderTargetView](https://msdn.microsoft.com/library/windows/desktop/ff476582.aspx) interface. 
+Each render target should also have a corresponding depth-stencil view because when we use [OMSetRenderTargets](https://docs.microsoft.com/windows/desktop/api/d3d11/nf-d3d11-id3d11devicecontext-omsetrendertargets) to set the render target before using it, it requires also a depth-stencil view. We access the render target resource through the render target view implemented using the [ID3D11RenderTargetView](https://docs.microsoft.com/windows/desktop/api/d3d11/nn-d3d11-id3d11rendertargetview) interface. 
 
 #### Device
 
@@ -563,21 +558,21 @@ For those who are new to Direct3D 11, you can imagine a device as a way to alloc
 
 For a more precise explanation, a Direct3D device is the rendering component of Direct3D. A device encapsulates and stores the rendering state, performs transformations and lighting operations, and rasterizes an image to a surface. For more information, see [Devices](../graphics-concepts/devices.md)
 
-A device is represented by the [ID3D11Device](https://msdn.microsoft.com/library/windows/desktop/ff476379.aspx) interface. In other words, the ID3D11Device interface represents a virtual display adapter and is used to create resources that are owned by a device. 
+A device is represented by the [ID3D11Device](https://docs.microsoft.com/windows/desktop/api/d3d11/nn-d3d11-id3d11device) interface. In other words, the ID3D11Device interface represents a virtual display adapter and is used to create resources that are owned by a device. 
 
-Note that there are different versions of ID3D11Device, [ID3D11Device5](https://msdn.microsoft.com/library/windows/desktop/mt492478.aspx) is the latest version and adds new methods to those in ID3D11Device4. For more information on how Direct3D communicates with the underlying hardware, see [Windows Device Driver Model (WDDM) architecture](https://docs.microsoft.com/windows-hardware/drivers/display/windows-vista-and-later-display-driver-model-architecture).
+Note that there are different versions of ID3D11Device, [ID3D11Device5](https://docs.microsoft.com/windows/desktop/api/d3d11_4/nn-d3d11_4-id3d11device5) is the latest version and adds new methods to those in ID3D11Device4. For more information on how Direct3D communicates with the underlying hardware, see [Windows Device Driver Model (WDDM) architecture](https://docs.microsoft.com/windows-hardware/drivers/display/windows-vista-and-later-display-driver-model-architecture).
 
-Each application must have at least one device, most applications only create one device. Create a device for one of the hardware drivers installed on your machine by calling __D3D11CreateDevice__ or __D3D11CreateDeviceAndSwapChain__ and specifying the driver type with the D3D\_DRIVER\_TYPE flag. Each device can use one or more device contexts, depending on the functionality desired. For more information, see [D3D11CreateDevice function](https://msdn.microsoft.com/library/windows/desktop/ff476082.aspx).
+Each application must have at least one device, most applications only create one device. Create a device for one of the hardware drivers installed on your machine by calling __D3D11CreateDevice__ or __D3D11CreateDeviceAndSwapChain__ and specifying the driver type with the D3D\_DRIVER\_TYPE flag. Each device can use one or more device contexts, depending on the functionality desired. For more information, see [D3D11CreateDevice function](https://docs.microsoft.com/windows/desktop/api/d3d11/nf-d3d11-d3d11createdevice).
 
 #### Device context
 
 A device context is used to set [pipeline](#rendering-pipeline) state and generate rendering commands using the [resources](#resource) owned by a [device](#device). 
 
-Direct3D 11 implements two types of device contexts, one for immediate rendering and the other for deferred rendering; both contexts are represented with an [ID3D11DeviceContext](https://msdn.microsoft.com/library/windows/desktop/ff476385.aspx) interface.  
+Direct3D 11 implements two types of device contexts, one for immediate rendering and the other for deferred rendering; both contexts are represented with an [ID3D11DeviceContext](https://docs.microsoft.com/windows/desktop/api/d3d11/nn-d3d11-id3d11devicecontext) interface.  
 
 The __ID3D11DeviceContext__ interfaces have different versions; __ID3D11DeviceContext4__ adds new methods to those in __ID3D11DeviceContext3__.
 
-Note: __ID3D11DeviceContext4__ is introduced in the Windows 10 Creators Update and is the latest version of the __ID3D11DeviceContext__ interface. Applications targeting Windows 10 Creators Update should use this interface instead of earlier versions. For more information, see [ID3D11DeviceContext4](https://msdn.microsoft.com/library/windows/desktop/mt492481.aspx).
+Note: __ID3D11DeviceContext4__ is introduced in the Windows 10 Creators Update and is the latest version of the __ID3D11DeviceContext__ interface. Applications targeting Windows 10 Creators Update should use this interface instead of earlier versions. For more information, see [ID3D11DeviceContext4](https://docs.microsoft.com/windows/desktop/api/d3d11_3/nn-d3d11_3-id3d11devicecontext4).
 
 #### DX::DeviceResources
 
@@ -612,11 +607,11 @@ Bind buffers to the:
     * Stream-output stage by calling __ID3D11DeviceContext::SOSetTargets__
     * Shader stage by calling shader methods, like __ID3D11DeviceContext::VSSetConstantBuffers__
 
-For more information, see [Introduction to buffers in Direct3D 11](https://msdn.microsoft.com/library/windows/desktop/ff476898.aspx).
+For more information, see [Introduction to buffers in Direct3D 11](https://docs.microsoft.com/windows/desktop/direct3d11/overviews-direct3d-11-resources-buffers-intro).
 
 ### DXGI
 
-Microsoft DirectX Graphics Infrastructure (DXGI) is a new subsystem that was introduced with Windows Vista that encapsulates some of the low-level tasks that are needed by Direct3D 10, 10.1, 11, and 11.1. Special care must be taken when using DXGI in a multithreaded application to ensure that deadlocks do not occur. For more info, see [DirectX Graphics Infrastructure (DXGI): Best Practices- Multithreading](https://msdn.microsoft.com/library/windows/desktop/ee417025.aspx#multithreading_and_dxgi)
+Microsoft DirectX Graphics Infrastructure (DXGI) is a new subsystem that was introduced with Windows Vista that encapsulates some of the low-level tasks that are needed by Direct3D 10, 10.1, 11, and 11.1. Special care must be taken when using DXGI in a multithreaded application to ensure that deadlocks do not occur. For more info, see [DirectX Graphics Infrastructure (DXGI): Best Practices- Multithreading](https://docs.microsoft.com/windows/desktop/direct3darticles/dxgi-best-practices)
 
 ### Feature Level
 
@@ -624,9 +619,9 @@ Feature level is a concept introduced in Direct3D 11 to handle the diversity of 
 
 Each video card implements a certain level of DirectX functionality depending on the GPUs installed. In prior versions of Microsoft Direct3D, you could find out the version of Direct3D the video card implemented, and then program your application accordingly. 
 
-With feature level, when you create a device, you can attempt to create a device for the feature level that you want to request. If the device creation works, that feature level exists, if not, the hardware does not support that feature level. You can either try to recreate a device at a lower feature level or you can choose to exit the application. For instance, the 12\_0 feature level requires Direct3D 11.3 or Direct3D 12, and shader model 5.1. For more information, see [Direct3D feature levels: Overview for each feature level](https://msdn.microsoft.com/library/windows/desktop/ff476876.aspx#Overview).
+With feature level, when you create a device, you can attempt to create a device for the feature level that you want to request. If the device creation works, that feature level exists, if not, the hardware does not support that feature level. You can either try to recreate a device at a lower feature level or you can choose to exit the application. For instance, the 12\_0 feature level requires Direct3D 11.3 or Direct3D 12, and shader model 5.1. For more information, see [Direct3D feature levels: Overview for each feature level](https://docs.microsoft.com/windows/desktop/direct3d11/overviews-direct3d-11-devices-downlevel-intro).
 
-Using feature levels, you can develop an application for Direct3D 9, Microsoft Direct3D 10, or Direct3D 11, and then run it on 9, 10, or 11 hardware (with some exceptions). For more information, see [Direct3D feature levels](https://msdn.microsoft.com/library/windows/desktop/ff476876.aspx).
+Using feature levels, you can develop an application for Direct3D 9, Microsoft Direct3D 10, or Direct3D 11, and then run it on 9, 10, or 11 hardware (with some exceptions). For more information, see [Direct3D feature levels](https://docs.microsoft.com/windows/desktop/direct3d11/overviews-direct3d-11-devices-downlevel-intro).
 
 ### Stereo rendering
 

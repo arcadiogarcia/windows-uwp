@@ -1,0 +1,40 @@
+- name: Docs
+  tocHref: /
+  topicHref: /
+  items:
+  - name: Windows
+    tocHref: /windows/
+    topicHref: /windows/
+    items:
+      - name: Apps
+        tocHref: /windows/apps/
+        topicHref: "/windows/apps/"
+        items:
+          - name: Build desktop apps
+            tocHref: /windows/apps/desktop/
+            topicHref: "/windows/apps/desktop/"
+          - name: Modernize desktop apps
+            tocHref: /windows/apps/desktop/modernize/
+            topicHref: "/windows/apps/desktop/modernize/"
+          - name: .NET TraceProcessing
+            tocHref: /windows/apps/trace-processing/
+            topicHref: "/windows/apps/trace-processing/overview"
+      - name: Development Environment
+        tocHref: /windows/dev-environment/
+        topicHref: "/windows/dev-environment/"
+        items:
+          - name: Python
+            tocHref: /windows/python/
+            topicHref: "/windows/python/"
+          - name: Node.js
+            tocHref: /windows/nodejs/
+            topicHref: "/windows/nodejs/"
+          - name: Mac to Windows
+            tocHref: /windows/dev-environment/mac-to-windows/
+            topicHref: "/windows/dev-environment/mac-to-windows/"
+          - name: Developer Environment
+            tocHref: /windows/dev-environment/wsl
+            topicHref: "/windows/wsl/about"
+          - name: Developer Environment
+            tocHref: /windows/dev-environment/wsl
+            topicHref: "/windows/wsl/wsl2-about"

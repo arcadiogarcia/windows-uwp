@@ -1,14 +1,10 @@
 ---
-author: jwmsft
 title: Relation based animations
 description: Create motion based on a property on another object.
-ms.author: jimwalk
 ms.date: 10/10/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp, animation
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
 # Relation based animations
 
@@ -53,7 +49,7 @@ Expressions also support a set of keywords – special phrases that have distinc
 There are two options for building Expressions in their UWP app:
 
 1. Building the equation as a string via the official, public API.
-1. Building the equation in a type-safe object model via the open source ExpressionBuilder tool. See the [Github source and documentation](https://github.com/Microsoft/WindowsUIDevLabs/tree/master/ExpressionBuilder).
+1. Building the equation in a type-safe object model via the open source ExpressionBuilder tool. See the [Github source and documentation](https://github.com/microsoft/WindowsCompositionSamples/tree/master/ExpressionBuilder).
 
 For the sake of this document, we will define our Expressions using ExpressionBuilder.
 

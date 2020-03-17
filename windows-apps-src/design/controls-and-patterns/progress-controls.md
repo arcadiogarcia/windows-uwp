@@ -1,47 +1,81 @@
 ---
-author: serenaz
 Description: A progress control provides feedback to the user that a long-running operation is underway.
 title: Guidelines for progress controls
 ms.assetid: FD53B716-C43D-408D-8B07-522BC1F3DF9D
 label: Progress controls
 template: detail.hbs
-ms.author: sezhen
-ms.date: 05/19/2017
+ms.date: 11/29/2019
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp
 pm-contact: kisai
 design-contact: jeffarn
 dev-contact: mitra
 doc-status: Published
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
 # Progress controls
 
- 
-
 A progress control provides feedback to the user that a long-running operation is underway. It can mean that the user cannot interact with the app when the progress indicator is visible, and can also indicate how long the wait time might be, depending on the indicator used.
 
-> **Important APIs**: [ProgressBar class](https://msdn.microsoft.com/library/windows/apps/xaml/windows.ui.xaml.controls.progressbar.aspx), [IsIndeterminate property](https://msdn.microsoft.com/library/windows/apps/xaml/windows.ui.xaml.controls.progressbar.isindeterminate.aspx), [ProgressRing class](https://msdn.microsoft.com/library/windows/apps/xaml/windows.ui.xaml.controls.progressring.aspx), [IsActive property](https://msdn.microsoft.com/library/windows/apps/xaml/windows.ui.xaml.controls.progressring.isactive.aspx)
+| **Platform APIs** | **Windows UI Library APIs** |
+| - | - |
+| [ProgressBar class](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ProgressBar), [IsIndeterminate property](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.progressbar.isindeterminate), [ProgressRing class](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ProgressRing), [IsActive property](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.progressring.isactive) | [ProgressBar class](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.ProgressBar), [IsIndeterminate property](https://docs.microsoft.com/uwp/api/microsoft.ui.xaml.controls.progressbar.isindeterminate) |
+
+| **Get the Windows UI Library** |
+| - |
+| This control is included as part of the Windows UI Library, a NuGet package that contains new controls and UI features for UWP apps. For more info, including installation instructions, see the [Windows UI Library overview](https://docs.microsoft.com/uwp/toolkits/winui/). |
+
+> [!NOTE]
+> There are two versions of the ProgressBar control: one in the platform, represented by the Windows.UI.Xaml namespace; the other in the Windows UI Library, the Microsoft.UI.Xaml namespace. Although the API for ProgressBar is the same, the control's appearance differs between these two versions. This document will show images of the newer Windows UI Library version.
+Throughout this document, we will use the **muxc** alias in XAML to represent the Windows UI Library APIs that we have included in our project. We have added this to our [Page](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.page) element:
+
+```xaml
+xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+```
+
+In the code-behind, we will also use the **muxc** alias in C# to represent the Windows UI Library APIs that we have included in our project. We have added this **using** statement at the top of the file:
+
+```csharp
+using muxc = Microsoft.UI.Xaml.Controls;
+```
+
+```vb
+Imports muxc = Microsoft.UI.Xaml.Controls
+```
 
 ## Types of progress
 
 There are two controls to show the user that an operation is underway – either through a ProgressBar or through a ProgressRing.
 
--   The ProgressBar *determinate* state shows the percentage completed of a task. This should be used during an operation whose duration is known, but it's progress should not block the user's interaction with the app.
+-   The ProgressBar *determinate* state shows the percentage completed of a task. This should be used during an operation whose duration is known, but its progress should not block the user's interaction with the app.
 -   The ProgressBar *indeterminate* state shows that an operation is underway, does not block user interaction with the app, and its completion time is unknown.
 -   The ProgressRing only has an *indeterminate* state, and should be used when any further user interaction is blocked until the operation has completed.
 
-Additionally, a progress control is read only, and not interactive. Meaning that the user cannot invoke or use these controls directly.
+Additionally, a progress control is read only and not interactive. Meaning that the user cannot invoke or use these controls directly.
 
-![ProgressBar states](images/ProgressBar_TwoStates.png)
+![ProgressBar states](images/progress-bar-two-states.png)
 
 *Top to bottom - Indeterminate ProgressBar and a determinate ProgressBar*
 
 ![ProgressRing state](images/ProgressRing_SingleState.png)
 
 *An indeterminate ProgressRing*
+
+## Examples
+
+<table>
+<th align="left">XAML Controls Gallery<th>
+<tr>
+<td><img src="images/xaml-controls-gallery-sm.png" alt="XAML controls gallery"></img></td>
+<td>
+    <p>If you have the <strong style="font-weight: semi-bold">XAML Controls Gallery</strong> app installed, click here to open the app and see the <a href="xamlcontrolsgallery:/item/ProgressBar">ProgressBar</a> or <a href="xamlcontrolsgallery:/item/ProgressRing">ProgressRing</a> in action.</p>
+    <ul>
+    <li><a href="https://www.microsoft.com/store/productId/9MSVH128X2ZT">Get the XAML Controls Gallery app (Microsoft Store)</a></li>
+    <li><a href="https://github.com/Microsoft/Xaml-Controls-Gallery">Get the source code (GitHub)</a></li>
+    </ul>
+</td>
+</tr>
+</table>
 
 ## When to use each control
 
@@ -101,13 +135,13 @@ Sometimes it’s best to see some visual representations of when and where to us
 
 **ProgressBar - Determinate**
 
-![ProgressBar determinate example](images/PB_DeterminateExample.png)
+![ProgressBar determinate example](images/progress-bar-determinate-example.png)
 
 The first example is the determinate ProgressBar. When the duration of the operation is known, when installing, downloading, setting up, etc; a determinate ProgressBar is best.
 
 **ProgressBar - Indeterminate**
 
-![ProgressBar indeterminate example](images/PB_IndeterminateExample.png)
+![ProgressBar indeterminate example](images/progress-bar-indeterminate-example.png)
 
 When it is not known how long the operation will take, use an indeterminate ProgressBar. Indeterminate ProgressBars are also good when filling a virtualized list, and creating a smooth visual transition between an indeterminate to determinate ProgressBar.
 
@@ -128,7 +162,7 @@ Both progress controls are rather simple; but some visual features of the contro
 **Sizing the ProgressRing**
 
 The ProgressRing can be sized as large as you want, but can only be as small as 20x20epx. In order to resize a ProgressRing, you must set its height and width. If only height or width are set, the control will assume minimum sizing (20x20epx) – conversely if the height and width are set to two different sizes, the smaller of the sizes will be assumed.
-To ensure your ProgressRing is correct for your needs, set bother the height and the width to the same value:
+To ensure your ProgressRing is correct for your needs, set both the height and the width to the same value:
 
 ```XAML
 <ProgressRing Height="100" Width="100"/>
@@ -150,7 +184,7 @@ By default, the main coloring of the progress controls is set to the accent colo
 
 ```XAML
 <ProgressRing IsActive="True" Height="100" Width="100" Foreground="Blue"/>
-<ProgressBar Width="100" Foreground="Green"/>
+<muxc:ProgressBar Width="100" Foreground="Green"/>
 ```
 
 Changing the foreground color for the ProgressRing will change the colors of the dots. The foreground property for the ProgressBar will change the fill color of the bar – to alter the unfilled portion of the bar, simply override the background property.
@@ -163,12 +197,15 @@ Sometimes it’s best to just show a brief wait cursor, when the app or operatio
 Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Wait, 10);
 ```
 
+## Get the sample code
+
+- [XAML Controls Gallery sample](https://github.com/Microsoft/Xaml-Controls-Gallery) - See all the XAML controls in an interactive format.
+
 ## Related articles
 
-
-- [ProgressBar class](https://msdn.microsoft.com/library/windows/apps/br227529)
-- [ProgressRing class](https://msdn.microsoft.com/library/windows/apps/br227538)
+- [ProgressBar class](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ProgressBar)
+- [ProgressRing class](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ProgressRing)
 
 **For developers (XAML)**
-- [Adding progress controls](https://msdn.microsoft.com/library/windows/apps/xaml/hh780651)
-- [How to create a custom indeterminate progress bar for Windows Phone](http://go.microsoft.com/fwlink/p/?LinkID=392426)
+- [Adding progress controls](https://docs.microsoft.com/previous-versions/windows/apps/hh780651(v=win.10))
+- [How to create a custom indeterminate progress bar for Windows Phone](https://msdn.microsoft.com/library/windows/apps/gg442303.aspx)

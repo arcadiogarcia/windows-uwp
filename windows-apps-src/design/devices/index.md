@@ -1,26 +1,25 @@
 ---
-author: mijacobs
 Description: Getting to know the devices that support Universal Windows Platform (UWP) apps will help you offer the best user experience for each form factor.
-title: Device primer for Universal Windows Platform (UWP) apps
+title: UI considerations for UWP devices
 ms.assetid: 7665044E-F007-495D-8D56-CE7C2361CDC4
 label: Device primer
 template: detail.hbs
 keywords: device, input, interaction
-ms.author: mijacobs
 ms.date: 02/08/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
-localizationpriority: medium
+
+
+ms.localizationpriority: medium
 ---
+#  UI considerations for UWP devices
 
-#  Device primer for Universal Windows Platform (UWP) apps
+![Devices](../images/devices-2x.png)
 
-
+Getting to know the devices that support Universal Windows Platform (UWP) apps will help you offer the best user experience for each form factor.
 
 ![windows-powered devices](images/device-primer/device-primer-ramp.png)
 
-Getting to know the devices that support Universal Windows Platform (UWP) apps will help you offer the best user experience for each form factor. When designing for a particular device, the main considerations include how the app will appear on that device, where, when, and how the app will be used on that device, and how the user will interact with that device.
+ When designing for a particular device, the main considerations include how the app will appear on that device, where, when, and how the app will be used on that device, and how the user will interact with that device.
 
 ## PCs and laptops
 
@@ -128,7 +127,7 @@ Typical device capabilities
 
 The most widely-used of all computing devices, phones can do a lot with limited screen real estate and basic inputs. Phones are available in a variety of sizes; larger phones are called phablets. App experiences on phablets are similar to those on phones, but the increased screen real estate of phablets enable some key changes in content consumption.
 
-With Continuum for Phones, a new experience for compatible Windows 10 mobile devices, users can connect their phones to a monitor and even use a mouse and keyboard to make their phones work like a laptop. (For more info, see the [Continuum for Phone article](http://go.microsoft.com/fwlink/p/?LinkID=699431).)
+With Continuum for Phones, a new experience for compatible Windows 10 mobile devices, users can connect their phones to a monitor and even use a mouse and keyboard to make their phones work like a laptop. (For more info, see the [Continuum for Phone article](https://docs.microsoft.com/windows-hardware/design/device-experiences/continuum-phone?redirectedfrom=MSDN).)
 
 Screen sizes
 -   4'' to 5'' for phone

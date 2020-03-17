@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
+
+// <SnippetOpenCVMainPageUsing>
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+// </SnippetOpenCVMainPageUsing>
 
 namespace ImagingWin10
 {
@@ -18,7 +21,7 @@ namespace ImagingWin10
 
         private async void OpenCVButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            //<SnippetOpenCVBlur>
+            // <SnippetOpenCVBlur>
             FileOpenPicker fileOpenPicker = new FileOpenPicker();
             fileOpenPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
             fileOpenPicker.FileTypeFilter.Add(".jpg");
@@ -57,7 +60,7 @@ namespace ImagingWin10
             var bitmapSource = new SoftwareBitmapSource();
             await bitmapSource.SetBitmapAsync(outputBitmap);
             imageControl.Source = bitmapSource;
-            //</SnippetOpenCVBlur>
+            // </SnippetOpenCVBlur>
         }
     }
 }

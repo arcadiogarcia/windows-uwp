@@ -1,29 +1,23 @@
 ---
-author: muhsinking
 ms.assetid: 454953E1-DD8F-44B7-A614-7BAD8C683536
 title: Use the gyrometer
 description: Learn how to use the gyrometer to detect changes in user movement.
-ms.author: mukin
 ms.date: 06/06/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
 # Use the gyrometer
 
 
 **Important APIs**
 
--   [**Windows.Devices.Sensors**](https://msdn.microsoft.com/library/windows/apps/BR206408)
--   [**Gyrometer**](https://msdn.microsoft.com/library/windows/apps/BR225718)
+-   [**Windows.Devices.Sensors**](https://docs.microsoft.com/uwp/api/Windows.Devices.Sensors)
+-   [**Gyrometer**](https://docs.microsoft.com/uwp/api/Windows.Devices.Sensors.Gyrometer)
 
 **Sample**
 
 -   For a more complete implementation, see the [gyrometer sample](https://github.com/Microsoft/Windows-universal-samples/tree/master/Samples/gyrometer).
-
-\[Some information relates to pre-released product which may be substantially modified before it's commercially released. Microsoft makes no warranties, express or implied, with respect to the information provided here.\]
 
 Learn how to use the gyrometer to detect changes in user movement.
 
@@ -180,4 +174,4 @@ These new values are written to the TextBlocks found in the project's XAML.
 
  ## Related topics
 
-* [Gyrometer Sample](http://go.microsoft.com/fwlink/p/?linkid=241379)
+* [Gyrometer Sample](https://code.msdn.microsoft.com/windowsapps/Gyrometer-Sensor-Sample-4fe891d9)

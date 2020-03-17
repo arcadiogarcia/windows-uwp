@@ -1,19 +1,14 @@
 ---
-author: mijacobs
 Description: Edge-based animations show or hide UI that originates from the edge of the screen.
 title: Edge-based UI animations in UWP apps
 ms.assetid: 5A8F73B1-F4F6-424b-9EDF-A9766C5DEAE8
 label: Motion--edge-based UI
 template: detail.hbs
-ms.author: mijacobs
 ms.date: 05/19/2017
 ms.topic: article
-ms.prod: windows
-ms.technology: uwp
 keywords: windows 10, uwp
-localizationpriority: medium
+ms.localizationpriority: medium
 ---
-
 # Edge-based UI animations
 
 
@@ -22,12 +17,7 @@ localizationpriority: medium
 
 Edge-based animations show or hide UI that originates from the edge of the screen. The show and hide actions can be initiated either by the user or by the app. The UI can either overlay the app or be part of the main app surface. If the UI is part of the app surface, the rest of the app might need to be resized to accommodate it.
 
-<div class="important-apis" >
-<b>Important APIs</b><br/>
-<ul>
-<li>[**EdgeUIThemeTransition class**](https://msdn.microsoft.com/library/windows/apps/hh702324)</li>
-</ul>
-</div>
+> **Important APIs**: [**EdgeUIThemeTransition class**](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.Animation.EdgeUIThemeTransition)
 
 
 ## Do's and don'ts
@@ -49,13 +39,13 @@ Edge-based animations show or hide UI that originates from the edge of the scree
 
 
 **For developers**
-* [Animations overview](https://msdn.microsoft.com/library/windows/apps/mt187350)
-* [Animating edge-based UI](https://msdn.microsoft.com/library/windows/apps/xaml/jj649428)
-* [Quickstart: Animating your UI using library animations](https://msdn.microsoft.com/library/windows/apps/xaml/hh452703)
-* [**EdgeUIThemeTransition class**](https://msdn.microsoft.com/library/windows/apps/hh702324)
-* [**PaneThemeTransition class**](https://msdn.microsoft.com/library/windows/apps/hh969160)
-* [Animating fades](https://msdn.microsoft.com/library/windows/apps/xaml/jj649429)
-* [Animating repositions](https://msdn.microsoft.com/library/windows/apps/xaml/jj649434)
+* [Animations overview](https://docs.microsoft.com/windows/uwp/graphics/animations-overview)
+* [Animating edge-based UI](https://docs.microsoft.com/previous-versions/windows/apps/jj649428(v=win.10))
+* [Quickstart: Animating your UI using library animations](https://docs.microsoft.com/previous-versions/windows/apps/hh452703(v=win.10))
+* [**EdgeUIThemeTransition class**](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.Animation.EdgeUIThemeTransition)
+* [**PaneThemeTransition class**](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.Animation.PaneThemeTransition)
+* [Animating fades](https://docs.microsoft.com/previous-versions/windows/apps/jj649429(v=win.10))
+* [Animating repositions](https://docs.microsoft.com/previous-versions/windows/apps/jj649434(v=win.10))
 
  
 
